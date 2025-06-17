@@ -430,10 +430,9 @@
           cokePercentage.textContent = `${sipsLeft * 20}%`;
         }
         if (sipsLeft === 0) {
-          cokeCan.remove();
-          cokePercentage.remove();
+          can.remove();
+          label.remove();
 
-          // 🥤 Create vending machine
           const vending = document.createElement("img");
           vending.src = "images/vending-machine.png";
           vending.alt = "Vending Machine";
@@ -445,12 +444,10 @@
           vending.style.transition = "right 2s ease";
           document.body.appendChild(vending);
 
-          // Slide in
           setTimeout(() => {
             vending.style.right = "20px";
           }, 100);
 
-          // Drop new Coke can
           setTimeout(() => {
             const newCan = document.createElement("img");
             newCan.src = "images/coke-can.png";
@@ -480,11 +477,15 @@
 
             opened = false;
             sipsLeft = 10;
-
             setupCokeInteractions(newCan, newLabel);
+
+            // Vending machine exits
+            setTimeout(() => {
+              vending.style.right = "-300px";
+              setTimeout(() => vending.remove(), 2000);
+            }, 1500);
           }, 2500);
         }
-
       }
     });
 
