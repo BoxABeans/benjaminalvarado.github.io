@@ -5,8 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday!</title>
   <style>
-    body {
+    body, html {
       margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: pink;
       font-family: 'Segoe UI', sans-serif;
     }
 
@@ -33,6 +36,15 @@
       border-radius: 10px;
     }
 
+    /* 🎉 Real content */
+    #real-content {
+      display: none;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+      background: pink;
+    }
+
     h1 {
       font-size: 3rem;
     }
@@ -40,28 +52,10 @@
     img {
       max-width: 300px;
       border-radius: 20px;
-      margin: 10px;
-    }
-
-    .image-container {
-      position: relative;
-      display: block;
       margin: 20px auto;
-    }
-
-
-    .main-img {
-      max-width: 300px;
-      border-radius: 20px;
-    }
-
-    .gif-overlay {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 60px;
-      transform: rotate(-15deg);
-      pointer-events: none;
+      display: block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
     }
 
     .confetti {
@@ -80,51 +74,33 @@
       }
     }
 
-    /* 💫 3D hover zoom + tilt */
+    /* 🎯 Tilt effect */
     .hover-tilt {
-      display: inline-block;
-      perspective: 1000px;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .hover-tilt img {
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      will-change: transform;
-    }
-
-    .hover-tilt:hover {
-      z-index: 10;
-    }
-
-    .hover-tilt:hover img {
-      transform: scale(1.05);
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    body, html {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: pink;
-    }
-
-    /* Force stacking + center alignment */
-    #real-content {
-      display: none;
-      color: #333;
-      text-align: center;
-      padding: 50px;
-      background: pink;
-    }
-
-    /* Stack images by making the tilt wrappers full width */
-    .hover-tilt {
+    /* 👑 Overlay GIF container */
+    .image-container {
+      position: relative;
       display: block;
       margin: 20px auto;
-      perspective: 1000px;
-      transition: transform 0.2s ease;
     }
 
+    .main-img {
+      max-width: 300px;
+      border-radius: 20px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .gif-overlay {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 60px;
+      transform: rotate(-15deg);
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -146,19 +122,12 @@
     <h1>Happy Birthday bbg :3! 🎉</h1>
     <p>I spent a lot of time making this so please love it ;-; 💖</p>
 
-    <div class="hover-tilt">
-      <img src="images/photo.png" alt="ben moment" />
-    </div>
+    <img class="hover-tilt" src="images/photo.png" alt="ben moment" />
+    <img class="hover-tilt" src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px;" />
 
-    <div class="hover-tilt">
-      <img src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px;" />
-    </div>
-
-    <div class="hover-tilt">
-      <div class="image-container">
-        <img src="images/grumpy liz.png" alt="liz moment" class="main-img" />
-        <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
-      </div>
+    <div class="image-container">
+      <img src="images/grumpy liz.png" alt="liz moment" class="main-img hover-tilt" />
+      <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
     </div>
   </div>
 
@@ -191,11 +160,9 @@
 
     // 🎯 Image hover-tilt based on mouse position
     document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".hover-tilt").forEach(container => {
-        const img = container.querySelector("img");
-
-        container.addEventListener("mousemove", e => {
-          const rect = container.getBoundingClientRect();
+      document.querySelectorAll(".hover-tilt").forEach(img => {
+        img.addEventListener("mousemove", e => {
+          const rect = img.getBoundingClientRect();
           const x = e.clientX - rect.left;
           const y = e.clientY - rect.top;
           const centerX = rect.width / 2;
@@ -205,7 +172,7 @@
           img.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
 
-        container.addEventListener("mouseleave", () => {
+        img.addEventListener("mouseleave", () => {
           img.style.transform = "scale(1)";
         });
       });
