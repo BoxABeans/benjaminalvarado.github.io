@@ -430,8 +430,8 @@
           cokePercentage.textContent = `${sipsLeft * 20}%`;
         }
         if (sipsLeft === 0) {
-          can.remove();
-          label.remove();
+          cokeCan.remove();
+          cokePercentage.remove();
 
           const vending = document.createElement("img");
           vending.src = "images/vending-machine.png";
@@ -479,7 +479,6 @@
             sipsLeft = 10;
             setupCokeInteractions(newCan, newLabel);
 
-            // Vending machine exits
             setTimeout(() => {
               vending.style.right = "-300px";
               setTimeout(() => vending.remove(), 2000);
@@ -571,94 +570,146 @@
       setInterval(launchConfetti, 1500);
     }
 
-    const bat = document.getElementById("baseball-bat");
-    const bonkSound = document.getElementById("bonk-sound");
-    let batDragging = false;
-    let batOffsetX = 0, batOffsetY = 0;
+const bat = document.getElementById("baseball-bat");
+const bonkSound = document.getElementById("bonk-sound");
+let batDragging = false;
+let batOffsetX = 0, batOffsetY = 0;
 
-    bat.addEventListener("mousedown", e => {
-      batDragging = true;
-      batOffsetX = e.clientX - bat.offsetLeft;
-      batOffsetY = e.clientY - bat.offsetTop;
-    });
+bat.addEventListener("mousedown", e => {
+  batDragging = true;
+  batOffsetX = e.clientX - bat.offsetLeft;
+  batOffsetY = e.clientY - bat.offsetTop;
+});
 
-    document.addEventListener("mousemove", e => {
-      if (!batDragging) return;
-      const x = e.clientX - batOffsetX;
-      const y = e.clientY - batOffsetY;
-      bat.style.left = `${x}px`;
-      bat.style.top = `${y}px`;
+document.addEventListener("mousemove", e => {
+  if (!batDragging) return;
+  const x = e.clientX - batOffsetX;
+  const y = e.clientY - batOffsetY;
+  bat.style.left = `${x}px`;
+  bat.style.top = `${y}px`;
 
-      document.querySelectorAll("img.hover-tilt, .gif-overlay").forEach(img => {
-        const batRect = bat.getBoundingClientRect();
-        const imgRect = img.getBoundingClientRect();
+  document.querySelectorAll("img.hover-tilt, .gif-overlay").forEach(img => {
+    const batRect = bat.getBoundingClientRect();
+    const imgRect = img.getBoundingClientRect();
 
-        const overlap = !(
-          batRect.right < imgRect.left ||
-          batRect.left > imgRect.right ||
-          batRect.bottom < imgRect.top ||
-          batRect.top > imgRect.bottom
-        );
+    const overlap = !(
+      batRect.right < imgRect.left ||
+      batRect.left > imgRect.right ||
+      batRect.bottom < imgRect.top ||
+      batRect.top > imgRect.bottom
+    );
 
-        if (overlap && !img.classList.contains("bonked")) {
-          bonkSound.currentTime = 0;
-          bonkSound.play();
-          img.classList.add("bonked");
-          img.style.transform = "rotate(-5deg) scale(0.95)";
-          setTimeout(() => {
-            img.style.transform = "scale(1)";
-            img.classList.remove("bonked");
-          }, 300);
-        }
-      });
-    });
+    if (overlap && !img.classList.contains("bonked")) {
+      bonkSound.currentTime = 0;
+      bonkSound.play();
+      img.classList.add("bonked");
+      img.style.transform = "rotate(-5deg) scale(0.95)";
+      setTimeout(() => {
+        img.style.transform = "scale(1)";
+        img.classList.remove("bonked");
+      }, 300);
+    }
+  });
+});
 
-    document.addEventListener("mouseup", () => {
-      batDragging = false;
-    });
+document.addEventListener("mouseup", () => {
+  batDragging = false;
+});
+    
 
     function setupCokeInteractions(can, label) {
-      let dragging = false;
-      let offsetX = 0, offsetY = 0;
+  let dragging = false;
+  let offsetX = 0, offsetY = 0;
 
-      can.addEventListener("mousedown", e => {
-        dragging = true;
-        offsetX = e.clientX - can.offsetLeft;
-        offsetY = e.clientY - can.offsetTop;
-      });
+  can.addEventListener("mousedown", e => {
+    dragging = true;
+    offsetX = e.clientX - can.offsetLeft;
+    offsetY = e.clientY - can.offsetTop;
+  });
 
-      document.addEventListener("mousemove", e => {
-        if (!dragging) return;
-        const newLeft = e.clientX - offsetX;
-        const newTop = e.clientY - offsetY;
-        can.style.left = `${newLeft}px`;
-        can.style.top = `${newTop}px`;
-        label.style.left = `${newLeft}px`;
-        label.style.top = `${newTop - 90}px`;
-      });
+  document.addEventListener("mousemove", e => {
+    if (!dragging) return;
+    const newLeft = e.clientX - offsetX;
+    const newTop = e.clientY - offsetY;
+    can.style.left = `${newLeft}px`;
+    can.style.top = `${newTop}px`;
+    label.style.left = `${newLeft}px`;
+    label.style.top = `${newTop - 90}px`;
+  });
 
-      document.addEventListener("mouseup", () => {
-        dragging = false;
-      });
+  document.addEventListener("mouseup", () => {
+    dragging = false;
+  });
 
-      can.addEventListener("click", () => {
-        if (!opened) {
-          openSound.play();
-          opened = true;
-        } else {
-          if (sipsLeft > 0) {
-            sipSound.play();
-            sipsLeft--;
-            label.textContent = `${sipsLeft * 20}%`;
-          }
-          if (sipsLeft === 0) {
-            can.remove();
-            label.remove();
-          }
-        }
-      });
+  can.addEventListener("click", () => {
+    if (!opened) {
+      openSound.play();
+      opened = true;
+    } else {
+      if (sipsLeft > 0) {
+        sipSound.play();
+        sipsLeft--;
+        label.textContent = `${sipsLeft * 20}%`;
+      }
+      if (sipsLeft === 0) {
+        can.remove();
+        label.remove();
+
+        const vending = document.createElement("img");
+        vending.src = "images/vending-machine.png";
+        vending.alt = "Vending Machine";
+        vending.style.position = "absolute";
+        vending.style.right = "-300px";
+        vending.style.bottom = "20px";
+        vending.style.width = "200px";
+        vending.style.zIndex = "15";
+        vending.style.transition = "right 2s ease";
+        document.body.appendChild(vending);
+
+        setTimeout(() => {
+          vending.style.right = "20px";
+        }, 100);
+
+        setTimeout(() => {
+          const newCan = document.createElement("img");
+          newCan.src = "images/coke-can.png";
+          newCan.alt = "Coke Can";
+          newCan.style.position = "absolute";
+          newCan.style.left = "100px";
+          newCan.style.bottom = "20px";
+          newCan.style.width = "80px";
+          newCan.style.cursor = "grab";
+          newCan.style.zIndex = "10";
+          newCan.id = "coke-can";
+
+          const newLabel = document.createElement("div");
+          newLabel.id = "coke-percentage";
+          newLabel.textContent = "100%";
+          newLabel.style.position = "absolute";
+          newLabel.style.left = "100px";
+          newLabel.style.bottom = "110px";
+          newLabel.style.background = "white";
+          newLabel.style.borderRadius = "6px";
+          newLabel.style.padding = "2px 6px";
+          newLabel.style.fontWeight = "bold";
+          newLabel.style.color = "#333";
+
+          document.body.appendChild(newCan);
+          document.body.appendChild(newLabel);
+
+          opened = false;
+          sipsLeft = 10;
+          setupCokeInteractions(newCan, newLabel);
+
+          setTimeout(() => {
+            vending.style.right = "-300px";
+            setTimeout(() => vending.remove(), 2000);
+          }, 1500);
+        }, 2500);
+      }
     }
-
+  });
+}
   </script>
 </body>
 </html>
