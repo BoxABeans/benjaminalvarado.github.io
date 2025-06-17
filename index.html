@@ -462,6 +462,12 @@
       powerBtn.style.left = `${x}px`;
       powerBtn.style.top = `${y - 30}px`;
 
+      if (mowerOn) {
+        trackMower(x + mower.offsetWidth / 2, y + mower.offsetHeight / 2);
+      }
+
+    });
+
     document.addEventListener("mouseup", () => {
       mowerDragging = false;
     });
