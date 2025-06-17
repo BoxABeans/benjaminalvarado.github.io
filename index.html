@@ -302,22 +302,6 @@
       setInterval(launchConfetti, 1500);
     }
 
-
-
-
-
-    function showRealPage() {
-      const happyAudio = document.getElementById('happy-audio');
-      happyAudio.play().catch(() => {
-        setTimeout(() => happyAudio.play(), 500);
-      });
-
-      document.getElementById('spooky-screen').style.display = 'none';
-      document.getElementById('creepy-audio').pause();
-      document.getElementById('real-content').style.display = 'block';
-      setInterval(launchConfetti, 1500);
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".hover-tilt").forEach(img => {
         img.addEventListener("mousemove", e => {
@@ -561,13 +545,6 @@
     function trackMower(x, y) {
       cutPath.push({x, y});
       drawCutPath();
-    }
-
-    function showRealPage() {
-      document.getElementById('spooky-screen').style.display = 'none';
-      document.getElementById('creepy-audio').pause();
-      document.getElementById('real-content').style.display = 'block';
-      setInterval(launchConfetti, 1500);
     }
 
 const bat = document.getElementById("baseball-bat");
