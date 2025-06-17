@@ -57,7 +57,9 @@
       display: block;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       will-change: transform;
+      -webkit-user-drag: none;
     }
+
 
     .hover-tilt {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -190,7 +192,7 @@
     </div>
   </div>
 
-  <img id="coke-can" src="images/coke-can.png" alt="Coke Can" />
+  <img id="coke-can" src="images/coke-can.png" alt="Coke Can" draggable="false" />
   <div id="coke-percentage">100%</div>
   <audio id="coke-open">
     <source src="audio/crack.mp3" type="audio/mpeg">
@@ -304,7 +306,7 @@
     const openSound = document.getElementById("coke-open");
     const sipSound = document.getElementById("coke-sip");
     let opened = false;
-    let sipsLeft = 5;
+    let sipsLeft = 10;
 
     // Coke Can Dragging & Interaction
     let cokeDragging = false;
