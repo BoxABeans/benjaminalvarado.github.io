@@ -14,6 +14,15 @@
       overflow-x: hidden;
     }
 
+    #cut-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5; /* beneath draggable objects like mower */
+      pointer-events: none;
+    }
+
+
     #spooky-screen {
       position: fixed;
       inset: 0;
@@ -168,6 +177,14 @@
   </div>
 
   <div id="real-content">
+    #cut-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5; /* beneath draggable objects like mower */
+      pointer-events: none;
+    }
+
     <audio id="happy-audio">
       <source src="audio/happy.mp3" type="audio/mpeg">
     </audio>
@@ -411,6 +428,36 @@
     document.addEventListener("mouseup", () => {
       mowerDragging = false;
     });
+
+    const canvas = document.getElementById('cut-canvas');
+    const ctx = canvas.getContext('2d');
+    let cutPath = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawCutPath();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function drawCutPath() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = 'destination-out';
+      for (const {x, y} of cutPath) {
+        ctx.beginPath();
+        ctx.arc(x, y, 30, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = 'source-over';
+    }
+
+    function trackMower(x, y) {
+      cutPath.push({x, y});
+      drawCutPath();
+    }
+
 
   </script>
 </body>
