@@ -432,7 +432,59 @@
         if (sipsLeft === 0) {
           cokeCan.remove();
           cokePercentage.remove();
+
+          // 🥤 Create vending machine
+          const vending = document.createElement("img");
+          vending.src = "images/vending-machine.png";
+          vending.alt = "Vending Machine";
+          vending.style.position = "absolute";
+          vending.style.right = "-300px";
+          vending.style.bottom = "20px";
+          vending.style.width = "200px";
+          vending.style.zIndex = "15";
+          vending.style.transition = "right 2s ease";
+          document.body.appendChild(vending);
+
+          // Slide in
+          setTimeout(() => {
+            vending.style.right = "20px";
+          }, 100);
+
+          // Drop new Coke can
+          setTimeout(() => {
+            const newCan = document.createElement("img");
+            newCan.src = "images/coke-can.png";
+            newCan.alt = "Coke Can";
+            newCan.style.position = "absolute";
+            newCan.style.left = "100px";
+            newCan.style.bottom = "20px";
+            newCan.style.width = "80px";
+            newCan.style.cursor = "grab";
+            newCan.style.zIndex = "10";
+            newCan.id = "coke-can";
+
+            const newLabel = document.createElement("div");
+            newLabel.id = "coke-percentage";
+            newLabel.textContent = "100%";
+            newLabel.style.position = "absolute";
+            newLabel.style.left = "100px";
+            newLabel.style.bottom = "110px";
+            newLabel.style.background = "white";
+            newLabel.style.borderRadius = "6px";
+            newLabel.style.padding = "2px 6px";
+            newLabel.style.fontWeight = "bold";
+            newLabel.style.color = "#333";
+
+            document.body.appendChild(newCan);
+            document.body.appendChild(newLabel);
+
+            opened = false;
+            sipsLeft = 10;
+
+            setupCokeInteractions(newCan, newLabel);
+          }, 2500);
         }
+
       }
     });
 
@@ -563,6 +615,49 @@
     document.addEventListener("mouseup", () => {
       batDragging = false;
     });
+
+    function setupCokeInteractions(can, label) {
+      let dragging = false;
+      let offsetX = 0, offsetY = 0;
+
+      can.addEventListener("mousedown", e => {
+        dragging = true;
+        offsetX = e.clientX - can.offsetLeft;
+        offsetY = e.clientY - can.offsetTop;
+      });
+
+      document.addEventListener("mousemove", e => {
+        if (!dragging) return;
+        const newLeft = e.clientX - offsetX;
+        const newTop = e.clientY - offsetY;
+        can.style.left = `${newLeft}px`;
+        can.style.top = `${newTop}px`;
+        label.style.left = `${newLeft}px`;
+        label.style.top = `${newTop - 90}px`;
+      });
+
+      document.addEventListener("mouseup", () => {
+        dragging = false;
+      });
+
+      can.addEventListener("click", () => {
+        if (!opened) {
+          openSound.play();
+          opened = true;
+        } else {
+          if (sipsLeft > 0) {
+            sipSound.play();
+            sipsLeft--;
+            label.textContent = `${sipsLeft * 20}%`;
+          }
+          if (sipsLeft === 0) {
+            can.remove();
+            label.remove();
+          }
+        }
+      });
+    }
+
   </script>
 </body>
 </html>
