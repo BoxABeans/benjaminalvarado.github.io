@@ -19,15 +19,39 @@
       max-width: 300px;
       border-radius: 20px;
     }
+
+    /* overlay system */
+    .image-container {
+      position: relative;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .main-img {
+      max-width: 300px;
+      border-radius: 20px;
+    }
+
+    .gif-overlay {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 60px;
+      transform: rotate(-15deg); /* counter-clockwise tilt */
+      pointer-events: none; /* so the gif doesn’t block clicks */
+    }
   </style>
 </head>
 <body>
-  <h1>Happy Birthday bbg :3! 🎉</h1>
+  <h1>Happy Birthday bbg :3 🎉</h1>
   <p>I spent a lot of time making this so please love it ;-; 💖</p>
+
   <img src="images/photo.png" alt="ben moment" style="max-width: 300px; height: auto; border-radius: 15px;" />
   <br />
   <img src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px; height: auto; border-radius: 15px;" />
   <br />
+
+  <!-- overlay image -->
   <div class="image-container">
     <img src="images/grumpy liz.png" alt="liz moment" class="main-img" />
     <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
