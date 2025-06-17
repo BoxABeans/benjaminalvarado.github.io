@@ -462,27 +462,6 @@
       powerBtn.style.left = `${x}px`;
       powerBtn.style.top = `${y - 30}px`;
 
-      if (mowerOn) {
-        trackMower(x + mower.offsetWidth / 2, y + mower.offsetHeight / 2);
-        document.querySelectorAll("img.hover-tilt").forEach(img => {
-          const mowerRect = mower.getBoundingClientRect();
-          const imgRect = img.getBoundingClientRect();
-
-          const overlap = !(
-            mowerRect.right < imgRect.left ||
-            mowerRect.left > imgRect.right ||
-            mowerRect.bottom < imgRect.top ||
-            mowerRect.top > imgRect.bottom
-          );
-
-          if (overlap && !img.classList.contains("mowed")) {
-            img.style.filter = "brightness(40%) blur(2px)";
-            img.classList.add("mowed");
-          }
-        });
-      }
-    });
-
     document.addEventListener("mouseup", () => {
       mowerDragging = false;
     });
