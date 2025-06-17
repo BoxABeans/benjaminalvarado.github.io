@@ -102,9 +102,10 @@
 
   <!-- 🎉 REAL BIRTHDAY CONTENT -->
   <div id="real-content">
-    <audio id="happy-audio" autoplay>
+    <audio id="happy-audio">
       <source src="audio/happy.mp3" type="audio/mpeg">
     </audio>
+
 
     <h1>Happy Birthday bbg :3! 🎉</h1>
     <p>I spent a lot of time making this so please love it ;-; 💖</p>
@@ -143,7 +144,7 @@
       document.getElementById('creepy-audio').pause();
       document.getElementById('real-content').style.display = 'block';
       document.getElementById('happy-audio').play();
-      launchConfetti(); // 🎊 start the party
+      setInterval(launchConfetti, 1500); // drops confetti every 1.5 seconds
     }
   </script>
 </body>
