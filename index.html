@@ -6,21 +6,52 @@
   <title>Happy Birthday!</title>
   <style>
     body {
+      margin: 0;
       font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* 👻 Spooky screen */
+    #spooky-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    #spooky-screen button {
+      background: red;
+      border: none;
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    /* 🎉 Real content (initially hidden) */
+    #real-content {
+      display: none;
       background: pink;
       color: #333;
       text-align: center;
       padding: 50px;
     }
+
     h1 {
       font-size: 3rem;
     }
+
     img {
       max-width: 300px;
       border-radius: 20px;
+      margin: 10px;
     }
 
-    /* overlay system */
     .image-container {
       position: relative;
       display: inline-block;
@@ -37,25 +68,83 @@
       top: -10px;
       right: -10px;
       width: 60px;
-      transform: rotate(-15deg); /* counter-clockwise tilt */
-      pointer-events: none; /* so the gif doesn’t block clicks */
+      transform: rotate(-15deg);
+      pointer-events: none;
     }
+
+    .confetti {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall linear forwards;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
   </style>
 </head>
 <body>
-  <h1>Happy Birthday bbg :3 🎉</h1>
-  <p>I spent a lot of time making this so please love it ;-; 💖</p>
 
-  <img src="images/photo.png" alt="ben moment" style="max-width: 300px; height: auto; border-radius: 15px;" />
-  <br />
-  <img src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px; height: auto; border-radius: 15px;" />
-  <br />
-
-  <!-- overlay image -->
-  <div class="image-container">
-    <img src="images/grumpy liz.png" alt="liz moment" class="main-img" />
-    <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
+  <!-- 👻 SPOOKY INTRO SCREEN -->
+  <div id="spooky-screen">
+    <audio id="creepy-audio" autoplay loop>
+      <source src="audio/creepy.mp3" type="audio/mpeg">
+    </audio>
+    <button onclick="showRealPage()">Surprise</button>
   </div>
 
+  <!-- 🎉 REAL BIRTHDAY CONTENT -->
+  <div id="real-content">
+    <audio id="happy-audio" autoplay>
+      <source src="audio/happy.mp3" type="audio/mpeg">
+    </audio>
+
+    <h1>Happy Birthday bbg :3! 🎉</h1>
+    <p>I spent a lot of time making this so please love it ;-; 💖</p>
+
+    <img src="images/photo.png" alt="ben moment" />
+    <br />
+    <img src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px;" />
+    <br />
+    <div class="image-container">
+      <img src="images/grumpy liz.png" alt="liz moment" class="main-img" />
+      <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
+    </div>
+  </div>
+
+  <script>
+    const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
+
+    function launchConfetti() {
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 2 + Math.random() * 3 + "s";
+        confetti.style.fontSize = 20 + Math.random() * 20 + "px";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+
+    function showRealPage() {
+      document.getElementById('spooky-screen').style.display = 'none';
+      document.getElementById('creepy-audio').pause();
+      document.getElementById('real-content').style.display = 'block';
+      document.getElementById('happy-audio').play();
+      launchConfetti(); // 🎊 start the party
+    }
+  </script>
 </body>
 </html>
