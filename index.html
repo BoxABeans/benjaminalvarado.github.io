@@ -16,6 +16,17 @@
       z-index: 0;
     }
 
+    #cut-canvas {
+      background: rgba(0, 0, 0, 0.05); /* TEMP: slight tint to see if canvas is visible */
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5; /* beneath draggable objects like mower */
+      pointer-events: none;
+    }
+
     body, html {
       margin: 0;
       padding: 0;
@@ -23,14 +34,6 @@
       background: transparent;
       font-family: 'Segoe UI', sans-serif;
       overflow-x: hidden;
-    }
-
-    #cut-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 5; /* beneath draggable objects like mower */
-      pointer-events: none;
     }
 
     #spooky-screen {
@@ -252,6 +255,7 @@
     }
     
     function resizeCanvas() {
+      
       canvas.width = Math.max(window.innerWidth, document.body.scrollWidth);
       canvas.height = Math.max(window.innerHeight, document.body.scrollHeight);
       drawCutPath();
@@ -459,20 +463,23 @@
     resizeCanvas();
 
     function drawCutPath() {
+      // Fill canvas with a semi-opaque mask first
       ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = '#fff'; // fill it with white (or use any semi-mask color)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.97)';  // this creates a visible "cuttable" layer
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Cut holes where mower has passed
       ctx.globalCompositeOperation = 'destination-out';
       for (const {x, y} of cutPath) {
         ctx.beginPath();
         ctx.arc(x, y, 30, 0, Math.PI * 2);
         ctx.fill();
       }
+
+      // Restore blend mode
       ctx.globalCompositeOperation = 'source-over';
     }
+
 
     function trackMower(x, y) {
       cutPath.push({x, y});
