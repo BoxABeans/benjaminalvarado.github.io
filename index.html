@@ -79,7 +79,6 @@
       }
     }
 
-
     .image-container {
       position: relative;
       display: block;
@@ -136,10 +135,29 @@
       font-size: 16px;
       padding: 2px 6px;
     }
+
+    #coke-can {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 80px;
+      cursor: grab;
+      z-index: 10;
+    }
+
+    #coke-percentage {
+      position: absolute;
+      bottom: 110px;
+      left: 20px;
+      color: #333;
+      background: white;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-
   <div id="spooky-screen">
     <audio id="creepy-audio" autoplay loop>
       <source src="audio/creepy.mp3" type="audio/mpeg">
@@ -171,6 +189,15 @@
       <button id="rotate-right">⟳</button>
     </div>
   </div>
+
+  <img id="coke-can" src="images/coke-can.png" alt="Coke Can" />
+  <div id="coke-percentage">100%</div>
+  <audio id="coke-open">
+    <source src="audio/crack.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="coke-sip">
+    <source src="audio/sip.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
     const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
@@ -222,6 +249,7 @@
       });
     });
 
+    // Party Hat Drag + Rotate
     let isDragging = false;
     let offsetX, offsetY;
     let rotation = 0;
@@ -269,6 +297,49 @@
       scale = Math.min(Math.max(0.3, scale), 3);
       wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
     }, { passive: false });
+
+    // Coke Can Interactions
+    const cokeCan = document.getElementById("coke-can");
+    const cokePercentage = document.getElementById("coke-percentage");
+    const openSound = document.getElementById("coke-open");
+    const sipSound = document.getElementById("coke-sip");
+    let opened = false;
+    let sipsLeft = 5;
+
+    cokeCan.addEventListener("mousedown", e => {
+      isDragging = true;
+      offsetX = e.clientX - cokeCan.offsetLeft;
+      offsetY = e.clientY - cokeCan.offsetTop;
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      cokeCan.style.left = `${e.clientX - offsetX}px`;
+      cokeCan.style.top = `${e.clientY - offsetY}px`;
+      cokePercentage.style.left = cokeCan.style.left;
+      cokePercentage.style.top = `${parseInt(cokeCan.style.top) - 90}px`;
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    cokeCan.addEventListener("click", () => {
+      if (!opened) {
+        openSound.play();
+        opened = true;
+      } else {
+        if (sipsLeft > 0) {
+          sipSound.play();
+          sipsLeft--;
+          cokePercentage.textContent = `${sipsLeft * 20}%`;
+        }
+        if (sipsLeft === 0) {
+          cokeCan.remove();
+          cokePercentage.remove();
+        }
+      }
+    });
   </script>
 </body>
 </html>
