@@ -13,7 +13,6 @@
       font-family: 'Segoe UI', sans-serif;
     }
 
-    /* 👻 Spooky screen */
     #spooky-screen {
       position: fixed;
       inset: 0;
@@ -36,7 +35,6 @@
       border-radius: 10px;
     }
 
-    /* 🎉 Real content */
     #real-content {
       display: none;
       color: #333;
@@ -74,12 +72,10 @@
       }
     }
 
-    /* 🎯 Tilt effect */
     .hover-tilt {
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* 👑 Overlay GIF container */
     .image-container {
       position: relative;
       display: block;
@@ -88,13 +84,11 @@
       width: fit-content;
     }
 
-
     .main-img {
       max-width: 300px;
       border-radius: 20px;
       display: block;
     }
-
 
     .gif-overlay {
       position: absolute;
@@ -103,6 +97,39 @@
       width: 60px;
       transform: rotate(-15deg);
       pointer-events: none;
+    }
+
+    #party-hat-wrapper {
+      position: absolute;
+      top: 200px;
+      left: 200px;
+      width: 100px;
+      user-select: none;
+      cursor: move;
+      transform-origin: center;
+      transition: transform 0.2s ease;
+    }
+
+    #party-hat {
+      width: 100%;
+      pointer-events: none;
+    }
+
+    #hat-controls {
+      position: absolute;
+      top: -25px;
+      left: -5px;
+      display: flex;
+      gap: 5px;
+    }
+
+    #hat-controls button {
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 6px;
     }
   </style>
 </head>
@@ -134,6 +161,15 @@
     </div>
   </div>
 
+  <!-- 🎩 Draggable Party Hat -->
+  <div id="party-hat-wrapper">
+    <img id="party-hat" src="images/party-hat.png" alt="Party Hat" />
+    <div id="hat-controls">
+      <button id="rotate-left">⟲</button>
+      <button id="rotate-right">⟳</button>
+    </div>
+  </div>
+
   <script>
     const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
 
@@ -155,10 +191,7 @@
 
     function showRealPage() {
       const happyAudio = document.getElementById('happy-audio');
-
-      // Try to play immediately after user gesture
       happyAudio.play().catch(e => {
-        console.warn("Autoplay failed, will try again after delay:", e);
         setTimeout(() => happyAudio.play(), 500);
       });
 
@@ -168,8 +201,7 @@
       setInterval(launchConfetti, 1500);
     }
 
-
-    // 🎯 Image hover-tilt based on mouse position
+    // Tilt Effect
     document.addEventListener("DOMContentLoaded", () => {
       document.querySelectorAll(".hover-tilt").forEach(img => {
         img.addEventListener("mousemove", e => {
@@ -187,6 +219,42 @@
           img.style.transform = "scale(1)";
         });
       });
+    });
+
+    // 🎩 Draggable + Rotatable Party Hat
+    let isDragging = false;
+    let offsetX, offsetY;
+    let rotation = 0;
+
+    const wrapper = document.getElementById("party-hat-wrapper");
+    const rotateLeftBtn = document.getElementById("rotate-left");
+    const rotateRightBtn = document.getElementById("rotate-right");
+
+    wrapper.addEventListener("mousedown", e => {
+      if (e.target.tagName === "BUTTON") return;
+      isDragging = true;
+      offsetX = e.clientX - wrapper.offsetLeft;
+      offsetY = e.clientY - wrapper.offsetTop;
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      wrapper.style.left = `${e.clientX - offsetX}px`;
+      wrapper.style.top = `${e.clientY - offsetY}px`;
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    rotateLeftBtn.addEventListener("click", () => {
+      rotation -= 15;
+      wrapper.style.transform = `rotate(${rotation}deg)`;
+    });
+
+    rotateRightBtn.addEventListener("click", () => {
+      rotation += 15;
+      wrapper.style.transform = `rotate(${rotation}deg)`;
     });
   </script>
 </body>
