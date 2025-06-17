@@ -306,23 +306,30 @@
     let opened = false;
     let sipsLeft = 5;
 
+    // Coke Can Dragging & Interaction
+    let cokeDragging = false;
+    let cokeOffsetX, cokeOffsetY;
+
     cokeCan.addEventListener("mousedown", e => {
-      isDragging = true;
-      offsetX = e.clientX - cokeCan.offsetLeft;
-      offsetY = e.clientY - cokeCan.offsetTop;
+      cokeDragging = true;
+      cokeOffsetX = e.clientX - cokeCan.offsetLeft;
+      cokeOffsetY = e.clientY - cokeCan.offsetTop;
     });
 
     document.addEventListener("mousemove", e => {
-      if (!isDragging) return;
-      cokeCan.style.left = `${e.clientX - offsetX}px`;
-      cokeCan.style.top = `${e.clientY - offsetY}px`;
-      cokePercentage.style.left = cokeCan.style.left;
-      cokePercentage.style.top = `${parseInt(cokeCan.style.top) - 90}px`;
+      if (!cokeDragging) return;
+      const newLeft = e.clientX - cokeOffsetX;
+      const newTop = e.clientY - cokeOffsetY;
+      cokeCan.style.left = `${newLeft}px`;
+      cokeCan.style.top = `${newTop}px`;
+      cokePercentage.style.left = `${newLeft}px`;
+      cokePercentage.style.top = `${newTop - 90}px`;
     });
 
     document.addEventListener("mouseup", () => {
-      isDragging = false;
+      cokeDragging = false;
     });
+
 
     cokeCan.addEventListener("click", () => {
       if (!opened) {
