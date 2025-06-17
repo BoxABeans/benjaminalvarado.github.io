@@ -229,7 +229,7 @@
   </div>
 
     <!-- Lawn Mower -->
-  <img id="lawnmower" src="images/lawnmower.png" alt="Lawnmower" draggable="false" style="position:absolute; top:100px; left:100px; width:120px; cursor:grab; z-index:20;">
+  <img id="lawnmower" src="images/lawnmower.png" alt="Lawnmower" draggable="false" style="position:absolute; top:100px; left:100px; width:200px; cursor:grab; z-index:20;">
   <button id="power-toggle" style="position:absolute; top:80px; left:100px; z-index:21;">Power: OFF</button>
   <audio id="mower-sound" loop>
     <source src="audio/lawnmower.mp3" type="audio/mpeg">
@@ -493,7 +493,8 @@
       ctx.globalCompositeOperation = 'destination-out';
       for (const {x, y} of cutPath) {
         ctx.beginPath();
-        ctx.arc(x, y, 30, 0, Math.PI * 2);
+        ctx.arc(x, y, 100, 0, Math.PI * 2); // lawnmower of the gods
+
         ctx.fill();
       }
 
