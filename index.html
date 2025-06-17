@@ -245,6 +245,11 @@
     <source src="audio/sip.mp3" type="audio/mpeg">
   </audio>
 
+  <img id="baseball-bat" src="images/bat.png" alt="Baseball Bat" style="position:absolute; top:300px; left:300px; width:150px; cursor:grab; z-index:25;" />
+  <audio id="bonk-sound">
+    <source src="audio/bonk.mp3" type="audio/mpeg">
+  </audio>
+
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 
@@ -512,6 +517,52 @@
       document.getElementById('real-content').style.display = 'block';
       setInterval(launchConfetti, 1500);
     }
+
+    const bat = document.getElementById("baseball-bat");
+    const bonkSound = document.getElementById("bonk-sound");
+    let batDragging = false;
+    let batOffsetX = 0, batOffsetY = 0;
+
+    bat.addEventListener("mousedown", e => {
+      batDragging = true;
+      batOffsetX = e.clientX - bat.offsetLeft;
+      batOffsetY = e.clientY - bat.offsetTop;
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (!batDragging) return;
+      const x = e.clientX - batOffsetX;
+      const y = e.clientY - batOffsetY;
+      bat.style.left = `${x}px`;
+      bat.style.top = `${y}px`;
+
+      document.querySelectorAll("img.hover-tilt").forEach(img => {
+        const batRect = bat.getBoundingClientRect();
+        const imgRect = img.getBoundingClientRect();
+
+        const overlap = !(
+          batRect.right < imgRect.left ||
+          batRect.left > imgRect.right ||
+          batRect.bottom < imgRect.top ||
+          batRect.top > imgRect.bottom
+        );
+
+        if (overlap && !img.classList.contains("bonked")) {
+          bonkSound.currentTime = 0;
+          bonkSound.play();
+          img.classList.add("bonked");
+          img.style.transform = "rotate(-5deg) scale(0.95)";
+          setTimeout(() => {
+            img.style.transform = "scale(1)";
+            img.classList.remove("bonked");
+          }, 300);
+        }
+      });
+    });
+
+    document.addEventListener("mouseup", () => {
+      batDragging = false;
+    });
   </script>
 </body>
 </html>
