@@ -11,6 +11,7 @@
       min-height: 100%;
       background: pink;
       font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
     }
 
     #spooky-screen {
@@ -22,7 +23,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 999;
+      z-index: 9999;
     }
 
     #spooky-screen button {
@@ -41,6 +42,8 @@
       text-align: center;
       padding: 50px;
       background: pink;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
@@ -54,22 +57,6 @@
       display: block;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       will-change: transform;
-    }
-
-    .confetti {
-      position: fixed;
-      top: -50px;
-      font-size: 24px;
-      animation: fall ease-in forwards;
-      pointer-events: none;
-      z-index: 50;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
     }
 
     .hover-tilt {
@@ -105,9 +92,10 @@
       left: 200px;
       width: 100px;
       user-select: none;
-      cursor: move;
+      cursor: grab;
       transform-origin: center;
       transition: transform 0.2s ease;
+      z-index: 10;
     }
 
     #party-hat {
@@ -135,7 +123,6 @@
 </head>
 <body>
 
-  <!-- 👻 SPOOKY INTRO SCREEN -->
   <div id="spooky-screen">
     <audio id="creepy-audio" autoplay loop>
       <source src="audio/creepy.mp3" type="audio/mpeg">
@@ -143,13 +130,12 @@
     <button onclick="showRealPage()">Surprise</button>
   </div>
 
-  <!-- 🎉 REAL BIRTHDAY CONTENT -->
   <div id="real-content">
     <audio id="happy-audio">
       <source src="audio/happy.mp3" type="audio/mpeg">
     </audio>
 
-    <h1>Happy Birthday bbg :3! 🎉</h1>
+    <h1>Happy Birthday bbg :3! ✨🎂</h1>
     <p>I spent a lot of time making this so please love it ;-; 💖</p>
 
     <img class="hover-tilt" src="images/photo.png" alt="ben moment" />
@@ -161,7 +147,6 @@
     </div>
   </div>
 
-  <!-- 🎩 Draggable Party Hat -->
   <div id="party-hat-wrapper">
     <img id="party-hat" src="images/party-hat.png" alt="Party Hat" />
     <div id="hat-controls">
@@ -171,106 +156,102 @@
   </div>
 
   <script>
-  const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
+    const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
 
-  function launchConfetti() {
-    for (let i = 0; i < 30; i++) {
-      const confetti = document.createElement("div");
-      confetti.className = "confetti";
-      confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-      confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.animationDuration = 5 + Math.random() * 4 + "s";
-      confetti.style.fontSize = 20 + Math.random() * 20 + "px";
-      document.body.appendChild(confetti);
+    function launchConfetti() {
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 5 + Math.random() * 4 + "s";
+        confetti.style.fontSize = 20 + Math.random() * 20 + "px";
+        document.body.appendChild(confetti);
 
-      setTimeout(() => {
-        confetti.remove();
-      }, 5000);
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
     }
-  }
 
-  function showRealPage() {
-    const happyAudio = document.getElementById('happy-audio');
-    happyAudio.play().catch(e => {
-      setTimeout(() => happyAudio.play(), 500);
-    });
-
-    document.getElementById('spooky-screen').style.display = 'none';
-    document.getElementById('creepy-audio').pause();
-    document.getElementById('real-content').style.display = 'block';
-    setInterval(launchConfetti, 1500);
-  }
-
-  // Tilt Effect
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".hover-tilt").forEach(img => {
-      img.addEventListener("mousemove", e => {
-        const rect = img.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = -(y - centerY) / 10;
-        const rotateY = (x - centerX) / 10;
-        img.style.transform = scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg);
+    function showRealPage() {
+      const happyAudio = document.getElementById('happy-audio');
+      happyAudio.play().catch(() => {
+        setTimeout(() => happyAudio.play(), 500);
       });
 
-      img.addEventListener("mouseleave", () => {
-        img.style.transform = "scale(1)";
+      document.getElementById('spooky-screen').style.display = 'none';
+      document.getElementById('creepy-audio').pause();
+      document.getElementById('real-content').style.display = 'block';
+      setInterval(launchConfetti, 1500);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".hover-tilt").forEach(img => {
+        img.addEventListener("mousemove", e => {
+          const rect = img.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = -(y - centerY) / 10;
+          const rotateY = (x - centerX) / 10;
+          img.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        img.addEventListener("mouseleave", () => {
+          img.style.transform = "scale(1)";
+        });
       });
     });
-  });
 
-  // 🎩 Draggable + Rotatable + Scalable Party Hat
-  let isDragging = false;
-  let offsetX, offsetY;
-  let rotation = 0;
-  let scale = 1;
-  let scalingActive = false;
+    let isDragging = false;
+    let offsetX, offsetY;
+    let rotation = 0;
+    let scale = 1;
+    let scalingActive = false;
 
-  const wrapper = document.getElementById("party-hat-wrapper");
-  const rotateLeftBtn = document.getElementById("rotate-left");
-  const rotateRightBtn = document.getElementById("rotate-right");
+    const wrapper = document.getElementById("party-hat-wrapper");
+    const rotateLeftBtn = document.getElementById("rotate-left");
+    const rotateRightBtn = document.getElementById("rotate-right");
 
-  wrapper.addEventListener("mousedown", e => {
-    if (e.target.tagName === "BUTTON") return;
-    isDragging = true;
-    scalingActive = true;
-    offsetX = e.clientX - wrapper.offsetLeft;
-    offsetY = e.clientY - wrapper.offsetTop;
-  });
+    wrapper.addEventListener("mousedown", e => {
+      if (e.target.tagName === "BUTTON") return;
+      isDragging = true;
+      scalingActive = true;
+      offsetX = e.clientX - wrapper.offsetLeft;
+      offsetY = e.clientY - wrapper.offsetTop;
+    });
 
-  document.addEventListener("mousemove", e => {
-    if (!isDragging) return;
-    wrapper.style.left = ${e.clientX - offsetX}px;
-    wrapper.style.top = ${e.clientY - offsetY}px;
-  });
+    document.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      wrapper.style.left = `${e.clientX - offsetX}px`;
+      wrapper.style.top = `${e.clientY - offsetY}px`;
+    });
 
-  document.addEventListener("mouseup", () => {
-    isDragging = false;
-    scalingActive = false;
-  });
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      scalingActive = false;
+    });
 
-  rotateLeftBtn.addEventListener("click", () => {
-    rotation -= 15;
-    wrapper.style.transform = rotate(${rotation}deg) scale(${scale});
-  });
+    rotateLeftBtn.addEventListener("click", () => {
+      rotation -= 15;
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+    });
 
-  rotateRightBtn.addEventListener("click", () => {
-    rotation += 15;
-    wrapper.style.transform = rotate(${rotation}deg) scale(${scale});
-  });
+    rotateRightBtn.addEventListener("click", () => {
+      rotation += 15;
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+    });
 
-  // 🎯 Scroll to scale while clicking hat
-  wrapper.addEventListener("wheel", (e) => {
-    if (!scalingActive) return;
-
-    e.preventDefault(); // block page scroll
-    const delta = -e.deltaY;
-    scale += delta * 0.0015;
-    scale = Math.min(Math.max(0.3, scale), 3); // clamp between 0.3x and 3x
-    wrapper.style.transform = rotate(${rotation}deg) scale(${scale});
-  }, { passive: false });
-</script>
+    wrapper.addEventListener("wheel", (e) => {
+      if (!scalingActive) return;
+      e.preventDefault();
+      const delta = -e.deltaY;
+      scale += delta * 0.0015;
+      scale = Math.min(Math.max(0.3, scale), 3);
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+    }, { passive: false });
+  </script>
 </body>
 </html>
