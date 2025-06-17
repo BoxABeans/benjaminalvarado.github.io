@@ -14,169 +14,244 @@
       overflow-x: hidden;
     }
 
+    #spooky-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #spooky-screen button {
+      background: red;
+      border: none;
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
     #real-content {
-      display: block;
+      display: none;
       color: #333;
       text-align: center;
       padding: 50px;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 5;
-      pointer-events: none;
-    }
-
-    #grass {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background: green;
+      background: pink;
+      position: relative;
       z-index: 1;
     }
 
-    .tool {
+    h1 {
+      font-size: 3rem;
+    }
+
+    img {
+      max-width: 300px;
+      border-radius: 20px;
+      margin: 20px auto;
+      display: block;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      will-change: transform;
+    }
+
+    .hover-tilt {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .image-container {
+      position: relative;
+      display: block;
+      margin: 20px auto;
+      text-align: center;
+      width: fit-content;
+    }
+
+    .main-img {
+      max-width: 300px;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .gif-overlay {
       position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 60px;
+      transform: rotate(-15deg);
+      pointer-events: none;
+    }
+
+    #party-hat-wrapper {
+      position: absolute;
+      top: 200px;
+      left: 200px;
       width: 100px;
       user-select: none;
       cursor: grab;
+      transform-origin: center;
+      transition: transform 0.2s ease;
       z-index: 10;
     }
 
-    #sunglasses {
-      top: 20px;
-      left: 20px;
+    #party-hat {
+      width: 100%;
+      pointer-events: none;
     }
 
-    #light-string {
-      position: fixed;
-      top: 0;
-      right: 20px;
-      width: 60px;
-      height: 100px;
-      background: url('images/light-string.png') no-repeat center;
-      background-size: contain;
-      z-index: 20;
-      cursor: pointer;
-    }
-
-    #coke-status {
+    #hat-controls {
       position: absolute;
-      font-size: 14px;
+      top: -25px;
+      left: -5px;
+      display: flex;
+      gap: 5px;
+    }
+
+    #hat-controls button {
       background: white;
-      padding: 4px 8px;
-      border-radius: 5px;
-      top: 80px;
-      left: 0;
-      z-index: 11;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 6px;
     }
   </style>
 </head>
 <body>
+
+  <div id="spooky-screen">
+    <audio id="creepy-audio" autoplay loop>
+      <source src="audio/creepy.mp3" type="audio/mpeg">
+    </audio>
+    <button onclick="showRealPage()">Surprise</button>
+  </div>
+
   <div id="real-content">
-    <h1>Happy Birthday bbg :3! 🎉</h1>
+    <audio id="happy-audio">
+      <source src="audio/happy.mp3" type="audio/mpeg">
+    </audio>
+
+    <h1>Happy Birthday bbg :3! ✨🎂</h1>
     <p>I spent a lot of time making this so please love it ;-; 💖</p>
-    <div id="grass"></div>
-    <div id="light-string"></div>
-    <img id="sunglasses" class="tool" src="images/sunglasses.png" />
-    <img id="lawnmower" class="tool" src="images/lawnmower.png" />
-    <img id="shotgun" class="tool" src="images/shotgun.png" />
-    <img id="coke" class="tool" src="images/coke-can.png" />
-    <div id="coke-status">100%</div>
-    <img id="bat" class="tool" src="images/bat.png" />
-    <canvas id="damage-layer"></canvas>
-    <audio id="bonk-sound" src="audio/bonk.mp3"></audio>
-    <audio id="crack-sound" src="audio/crack.mp3"></audio>
-    <audio id="sip-sound" src="audio/sip.mp3"></audio>
-    <audio id="crickets" src="audio/crickets.mp3" loop></audio>
+
+    <img class="hover-tilt" src="images/photo.png" alt="ben moment" />
+    <img class="hover-tilt" src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px;" />
+
+    <div class="image-container">
+      <img src="images/grumpy liz.png" alt="liz moment" class="main-img hover-tilt" />
+      <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
+    </div>
+  </div>
+
+  <div id="party-hat-wrapper">
+    <img id="party-hat" src="images/party-hat.png" alt="Party Hat" />
+    <div id="hat-controls">
+      <button id="rotate-left">⟲</button>
+      <button id="rotate-right">⟳</button>
+    </div>
   </div>
 
   <script>
-    const canvas = document.getElementById('damage-layer');
-    const ctx = canvas.getContext('2d');
-    const coke = document.getElementById('coke');
-    const cokeStatus = document.getElementById('coke-status');
-    let cokeLevel = 100;
+    const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function launchConfetti() {
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.animationDuration = 5 + Math.random() * 4 + "s";
+        confetti.style.fontSize = 20 + Math.random() * 20 + "px";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
 
-    // Drag tools
-    document.querySelectorAll('.tool').forEach(el => {
-      let offsetX, offsetY;
-      el.addEventListener('mousedown', e => {
-        offsetX = e.clientX - el.offsetLeft;
-        offsetY = e.clientY - el.offsetTop;
-        function move(e) {
-          el.style.left = (e.clientX - offsetX) + 'px';
-          el.style.top = (e.clientY - offsetY) + 'px';
-        }
-        function stop() {
-          window.removeEventListener('mousemove', move);
-          window.removeEventListener('mouseup', stop);
-        }
-        window.addEventListener('mousemove', move);
-        window.addEventListener('mouseup', stop);
+    function showRealPage() {
+      const happyAudio = document.getElementById('happy-audio');
+      happyAudio.play().catch(() => {
+        setTimeout(() => happyAudio.play(), 500);
+      });
+
+      document.getElementById('spooky-screen').style.display = 'none';
+      document.getElementById('creepy-audio').pause();
+      document.getElementById('real-content').style.display = 'block';
+      setInterval(launchConfetti, 1500);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".hover-tilt").forEach(img => {
+        img.addEventListener("mousemove", e => {
+          const rect = img.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = -(y - centerY) / 10;
+          const rotateY = (x - centerX) / 10;
+          img.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        img.addEventListener("mouseleave", () => {
+          img.style.transform = "scale(1)";
+        });
       });
     });
 
-    // Lawn mowing
-    document.getElementById('lawnmower').addEventListener('mousedown', () => {
-      const mower = document.getElementById('lawnmower');
-      const mowInterval = setInterval(() => {
-        ctx.clearRect(mower.offsetLeft, mower.offsetTop, mower.width, mower.height);
-      }, 100);
-      document.addEventListener('mouseup', () => clearInterval(mowInterval), { once: true });
+    let isDragging = false;
+    let offsetX, offsetY;
+    let rotation = 0;
+    let scale = 1;
+    let scalingActive = false;
+
+    const wrapper = document.getElementById("party-hat-wrapper");
+    const rotateLeftBtn = document.getElementById("rotate-left");
+    const rotateRightBtn = document.getElementById("rotate-right");
+
+    wrapper.addEventListener("mousedown", e => {
+      if (e.target.tagName === "BUTTON") return;
+      isDragging = true;
+      scalingActive = true;
+      offsetX = e.clientX - wrapper.offsetLeft;
+      offsetY = e.clientY - wrapper.offsetTop;
     });
 
-    // Shotgun firing
-    document.getElementById('shotgun').addEventListener('click', e => {
-      for (let i = 0; i < 6 + Math.random() * 4; i++) {
-        const x = e.clientX + Math.random() * 100 - 50;
-        const y = e.clientY + Math.random() * 100 - 50;
-        ctx.beginPath();
-        ctx.arc(x, y, 10 + Math.random() * 10, 0, 2 * Math.PI);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-      }
+    document.addEventListener("mousemove", e => {
+      if (!isDragging) return;
+      wrapper.style.left = `${e.clientX - offsetX}px`;
+      wrapper.style.top = `${e.clientY - offsetY}px`;
     });
 
-    // Coke sip
-    document.getElementById('coke').addEventListener('dblclick', () => {
-      if (cokeLevel <= 0) return;
-      cokeLevel -= 10;
-      cokeStatus.innerText = cokeLevel + '%';
-      document.getElementById('sip-sound').play();
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+      scalingActive = false;
     });
 
-    // Crack open
-    coke.addEventListener('click', () => {
-      document.getElementById('crack-sound').play();
+    rotateLeftBtn.addEventListener("click", () => {
+      rotation -= 15;
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
     });
 
-    // Bonk
-    document.getElementById('bat').addEventListener('mousedown', () => {
-      document.getElementById('bonk-sound').play();
+    rotateRightBtn.addEventListener("click", () => {
+      rotation += 15;
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
     });
 
-    // Light string toggle
-    const lightString = document.getElementById('light-string');
-    let nightMode = false;
-    lightString.addEventListener('click', () => {
-      nightMode = !nightMode;
-      document.body.style.background = nightMode ? '#ffb6c1' : 'pink';
-      const crickets = document.getElementById('crickets');
-      if (nightMode) crickets.play();
-      else crickets.pause();
-    });
+    wrapper.addEventListener("wheel", (e) => {
+      if (!scalingActive) return;
+      e.preventDefault();
+      const delta = -e.deltaY;
+      scale += delta * 0.0015;
+      scale = Math.min(Math.max(0.3, scale), 3);
+      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+    }, { passive: false });
   </script>
 </body>
 </html>
