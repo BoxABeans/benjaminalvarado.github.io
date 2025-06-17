@@ -63,6 +63,23 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
+    .confetti {
+      position: fixed;
+      top: -50px;
+      font-size: 24px;
+      animation: fall ease-in forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+
     .image-container {
       position: relative;
       display: block;
