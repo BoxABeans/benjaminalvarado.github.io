@@ -154,12 +154,20 @@
     }
 
     function showRealPage() {
+      const happyAudio = document.getElementById('happy-audio');
+
+      // Try to play immediately after user gesture
+      happyAudio.play().catch(e => {
+        console.warn("Autoplay failed, will try again after delay:", e);
+        setTimeout(() => happyAudio.play(), 500);
+      });
+
       document.getElementById('spooky-screen').style.display = 'none';
       document.getElementById('creepy-audio').pause();
       document.getElementById('real-content').style.display = 'block';
-      document.getElementById('happy-audio').play();
       setInterval(launchConfetti, 1500);
     }
+
 
     // 🎯 Image hover-tilt based on mouse position
     document.addEventListener("DOMContentLoaded", () => {
