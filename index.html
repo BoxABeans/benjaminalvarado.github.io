@@ -5,22 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Happy Birthday!</title>
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: pink;
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-    }
-
-    #cut-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 5; /* beneath draggable objects like mower */
-      pointer-events: none;
-    }
 
     #cut-background {
       position: fixed;
@@ -32,7 +16,22 @@
       z-index: 0;
     }
 
+    body, html {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: transparent;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
 
+    #cut-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5; /* beneath draggable objects like mower */
+      pointer-events: none;
+    }
 
     #spooky-screen {
       position: fixed;
@@ -61,7 +60,7 @@
       color: #333;
       text-align: center;
       padding: 50px;
-      background: pink;
+      background: transparent;
       position: relative;
       z-index: 1;
     }
@@ -189,9 +188,9 @@
     <button onclick="showRealPage()">Surprise</button>
   </div>
 
-  <div id="real-content">
-    <canvas id="cut-canvas"></canvas>
+<canvas id="cut-canvas"></canvas>
 
+  <div id="real-content">
     <audio id="happy-audio">
       <source src="audio/happy.mp3" type="audio/mpeg">
     </audio>
@@ -251,6 +250,14 @@
         }, 5000);
       }
     }
+    
+    function resizeCanvas() {
+      canvas.width = Math.max(window.innerWidth, document.body.scrollWidth);
+      canvas.height = Math.max(window.innerHeight, document.body.scrollHeight);
+      drawCutPath();
+    }
+
+
 
     function showRealPage() {
       const happyAudio = document.getElementById('happy-audio');
