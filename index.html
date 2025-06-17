@@ -536,7 +536,7 @@
       bat.style.left = `${x}px`;
       bat.style.top = `${y}px`;
 
-      document.querySelectorAll("img.hover-tilt").forEach(img => {
+      document.querySelectorAll("img.hover-tilt, .gif-overlay").forEach(img => {
         const batRect = bat.getBoundingClientRect();
         const imgRect = img.getBoundingClientRect();
 
