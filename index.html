@@ -177,13 +177,7 @@
   </div>
 
   <div id="real-content">
-    #cut-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 5; /* beneath draggable objects like mower */
-      pointer-events: none;
-    }
+    <canvas id="cut-canvas"></canvas>
 
     <audio id="happy-audio">
       <source src="audio/happy.mp3" type="audio/mpeg">
@@ -397,6 +391,7 @@
     });
 
     document.addEventListener("mousemove", e => {
+
       if (!mowerDragging) return;
       const x = e.clientX - mowerOffsetX;
       const y = e.clientY - mowerOffsetY;
@@ -406,6 +401,7 @@
       powerBtn.style.top = `${y - 30}px`;
 
       if (mowerOn) {
+        trackMower(x + mower.offsetWidth / 2, y + mower.offsetHeight / 2);
         document.querySelectorAll("img.hover-tilt").forEach(img => {
           const mowerRect = mower.getBoundingClientRect();
           const imgRect = img.getBoundingClientRect();
