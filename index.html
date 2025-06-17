@@ -357,6 +357,61 @@
         }
       }
     });
+
+        // 🚜 Lawn Mower Drag & Cut
+    const mower = document.getElementById("lawnmower");
+    const mowerSound = document.getElementById("mower-sound");
+    const powerBtn = document.getElementById("power-toggle");
+    let mowerOn = false;
+    let mowerDragging = false;
+    let mowerOffsetX = 0, mowerOffsetY = 0;
+
+    powerBtn.addEventListener("click", () => {
+      mowerOn = !mowerOn;
+      powerBtn.textContent = mowerOn ? "Power: ON" : "Power: OFF";
+      if (mowerOn) mowerSound.play();
+      else mowerSound.pause();
+    });
+
+    mower.addEventListener("mousedown", e => {
+      mowerDragging = true;
+      mowerOffsetX = e.clientX - mower.offsetLeft;
+      mowerOffsetY = e.clientY - mower.offsetTop;
+    });
+
+    document.addEventListener("mousemove", e => {
+      if (!mowerDragging) return;
+      const x = e.clientX - mowerOffsetX;
+      const y = e.clientY - mowerOffsetY;
+      mower.style.left = `${x}px`;
+      mower.style.top = `${y}px`;
+      powerBtn.style.left = `${x}px`;
+      powerBtn.style.top = `${y - 30}px`;
+
+      if (mowerOn) {
+        document.querySelectorAll("img.hover-tilt").forEach(img => {
+          const mowerRect = mower.getBoundingClientRect();
+          const imgRect = img.getBoundingClientRect();
+
+          const overlap = !(
+            mowerRect.right < imgRect.left ||
+            mowerRect.left > imgRect.right ||
+            mowerRect.bottom < imgRect.top ||
+            mowerRect.top > imgRect.bottom
+          );
+
+          if (overlap && !img.classList.contains("mowed")) {
+            img.style.filter = "brightness(40%) blur(2px)";
+            img.classList.add("mowed");
+          }
+        });
+      }
+    });
+
+    document.addEventListener("mouseup", () => {
+      mowerDragging = false;
+    });
+
   </script>
 </body>
 </html>
