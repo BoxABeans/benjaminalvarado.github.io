@@ -147,22 +147,21 @@
 
   <p class="note">This web format is optimized for responsive use in dashboards like Notion or Trello. Designed for quick reference in dev pipelines.</p>
 
-  <div style="text-align: center; margin-top: 2rem;">
-  <a href="mailto:gamebox609@gmail.com?subject=Checklist%20Confirmation&body=Hi%20Benjamin,%0A%0AI%20have%20completed%20the%20documentation%20checklist!" target="_blank">
-    <button style="
-      padding: 1rem 2rem;
-      font-size: 1.1rem;
-      background-color: #00d1ff;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease, background-color 0.2s ease;">
-      ✅ Confirm & Email Developer
-    </button>
-  </a>
-</div>
+  <form action="https://formspree.io/f/mvgrdred" method="POST">
+  <div class="section">
+    <h2>🚧 Pre-Release Tasks</h2>
+    <label><input type="checkbox" name="Quick Start Guide"> Quick Start Guide</label><br>
+    <label><input type="checkbox" name="Report Bugs Section"> "How to Report Bugs"</label><br>
+    <label><input type="checkbox" name="Tutorial Coverage"> Tutorial covers core mechanics</label><br>
+    <label><input type="checkbox" name="UI Compliance"> UI text meets WCAG standards</label><br>
+    <label><input type="checkbox" name="Consistent Icons"> Consistent iconography</label><br>
+  </div>
+
+  <input type="email" name="_replyto" placeholder="Your email" required><br><br>
+
+  <button type="submit">✅ Submit Checklist</button>
+</form>
+
 
 </body>
 </html>
