@@ -2,692 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Player-Facing Documentation Checklist</title>
   <style>
-    #cut-background {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: pink;
-      z-index: 0;
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 2rem;
     }
-
-    #grass-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: pink;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
+    h1, h2 {
+      color: #2c3e50;
     }
-
-    #cut-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    body, html {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: transparent;
-      font-family: 'Segoe UI', sans-serif;
-      overflow-x: hidden;
-    }
-
-
-    #spooky-screen {
-      position: fixed;
-      inset: 0;
-      background: black;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-    }
-
-    #spooky-screen button {
-      background: red;
-      border: none;
-      padding: 20px 40px;
-      font-size: 1.5rem;
-      color: white;
-      cursor: pointer;
+    .section {
+      margin-bottom: 2rem;
+      background: #fff;
+      padding: 1rem 1.5rem;
       border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
-
-    #real-content {
-      display: none;
-      color: #333;
-      text-align: center;
-      padding: 50px;
-      background: transparent;
-      position: relative;
-      z-index: 1;
+    ul {
+      list-style: none;
+      padding-left: 0;
     }
-
-    h1 {
-      font-size: 3rem;
+    li {
+      margin-bottom: 0.5rem;
     }
-
-    img {
-      max-width: 300px;
-      border-radius: 20px;
-      margin: 20px auto;
-      display: block;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      will-change: transform;
-      -webkit-user-drag: none;
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 0.5rem;
     }
-
-
-    .hover-tilt {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .confetti {
-      position: fixed;
-      top: -50px;
-      font-size: 24px;
-      animation: fall ease-in forwards;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    .image-container {
-      position: relative;
-      display: block;
-      margin: 20px auto;
-      text-align: center;
-      width: fit-content;
-    }
-
-    .main-img {
-      max-width: 300px;
-      border-radius: 20px;
-      display: block;
-    }
-
-    .gif-overlay {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      width: 60px;
-      transform: rotate(-15deg);
-      pointer-events: none;
-    }
-
-    #party-hat-wrapper {
-      position: absolute;
-      top: 200px;
-      left: 200px;
-      width: 100px;
-      user-select: none;
-      cursor: grab;
-      transform-origin: center;
-      transition: transform 0.2s ease;
-      z-index: 10;
-    }
-
-    #party-hat {
-      width: 100%;
-      pointer-events: none;
-    }
-
-    #hat-controls {
-      position: absolute;
-      top: -25px;
-      left: -5px;
-      display: flex;
-      gap: 5px;
-    }
-
-    #hat-controls button {
-      background: white;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      padding: 2px 6px;
-    }
-
-    #coke-can {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      width: 80px;
-      cursor: grab;
-      z-index: 10;
-    }
-
-    #coke-percentage {
-      position: absolute;
-      bottom: 110px;
-      left: 20px;
-      color: #333;
-      background: white;
-      border-radius: 6px;
-      padding: 2px 6px;
-      font-weight: bold;
+    .note {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div id="cut-background"></div>
-  <div id="grass-layer"></div>
+  <h1>Player-Facing Documentation Checklist</h1>
+  <p><strong>Prepared for:</strong> Game Development Team (Programmers, Designers, Artists)</p>
+  <p><strong>Author:</strong> Benjamin Alvarado</p>
+  <p><strong>Date:</strong> 6/20/25</p>
 
-  <div id="spooky-screen">
-    <audio id="creepy-audio" autoplay loop>
-      <source src="audio/creepy.mp3" type="audio/mpeg">
-    </audio>
-    <button onclick="showRealPage()">Surprise</button>
+  <div class="section">
+    <h2>Purpose</h2>
+    <p>This checklist helps ensure that tutorials, guides, and bug reporting instructions are consistent and easy for players to understand. It promotes accessibility and reduces support requests.</p>
   </div>
 
-  <canvas id="cut-canvas"></canvas>
-
-  <div id="real-content">
-    <audio id="happy-audio">
-      <source src="audio/happy.mp3" type="audio/mpeg">
-    </audio>
-
-    <h1>Happy Birthday bbg :3! ✨🎂</h1>
-    <p>I spent a lot of time making this so please love it ;-; 💖</p>
-
-    <img class="hover-tilt" src="images/photo.png" alt="ben moment" />
-    <img class="hover-tilt" src="images/my nerd.png" alt="omg thats you :O" style="max-width: 800px;" />
-
-    <div class="image-container">
-      <img src="images/grumpy liz.png" alt="liz moment" class="main-img hover-tilt" />
-      <img src="images/lick.gif" alt="nyom" class="gif-overlay" />
-    </div>
+  <div class="section">
+    <h2>Pre-Release Tasks</h2>
+    <ul>
+      <li><input type="checkbox"> Quick Start Guide in HTML, PDF, or in-game format</li>
+      <li><input type="checkbox"> "How to Report Bugs" section added (README or menu)</li>
+      <li><input type="checkbox"> Tutorial includes mechanics, UI, objectives</li>
+      <li><input type="checkbox"> UI text is 14pt+ and WCAG AA contrast compliant</li>
+      <li><input type="checkbox"> Consistent icons for key actions (jump, inventory, pause)</li>
+    </ul>
   </div>
 
-  <div id="party-hat-wrapper">
-    <img id="party-hat" src="images/party-hat.png" alt="Party Hat" />
-    <div id="hat-controls">
-      <button id="rotate-left">⟲</button>
-      <button id="rotate-right">⟳</button>
-    </div>
+  <div class="section">
+    <h2>Release Tasks</h2>
+    <ul>
+      <li><input type="checkbox"> Documentation linked on game page (itch.io, Steam, etc.)</li>
+      <li><input type="checkbox"> Bug report form user-tested</li>
+      <li><input type="checkbox"> Docs accessible via Main Menu and Pause Menu</li>
+    </ul>
   </div>
 
-    <!-- Lawn Mower -->
-  <img id="lawnmower" src="images/lawnmower.png" alt="Lawnmower" draggable="false" style="position:absolute; top:100px; left:100px; width:200px; cursor:grab; z-index:20;">
-  <button id="power-toggle" style="position:absolute; top:80px; left:100px; z-index:21;">Power: OFF</button>
-  <audio id="mower-sound" loop>
-    <source src="audio/lawnmower.mp3" type="audio/mpeg">
-  </audio>
-
-
-  <img id="coke-can" src="images/coke-can.png" alt="Coke Can" draggable="false" />
-  <div id="coke-percentage">100%</div>
-  <audio id="coke-open">
-    <source src="audio/crack.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="coke-sip">
-    <source src="audio/sip.mp3" type="audio/mpeg">
-  </audio>
-
-  <img id="baseball-bat" src="images/bat.png" alt="Baseball Bat" style="position:absolute; top:300px; left:300px; width:150px; cursor:grab; z-index:25;" />
-  <audio id="bonk-sound">
-    <source src="audio/bonk.mp3" type="audio/mpeg">
-  </audio>
-
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
-
-  <script>
-    const emojis = ["🎉", "✨", "💖", "🎂", "🥳"];
-
-    function launchConfetti() {
-      for (let i = 0; i < 30; i++) {
-        const confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.animationDuration = 5 + Math.random() * 4 + "s";
-        confetti.style.fontSize = 20 + Math.random() * 20 + "px";
-        document.body.appendChild(confetti);
-
-        setTimeout(() => {
-          confetti.remove();
-        }, 5000);
-      }
-    }
-    
-    function resizeCanvas() {
-      
-      canvas.width = Math.max(window.innerWidth, document.body.scrollWidth);
-      canvas.height = Math.max(window.innerHeight, document.body.scrollHeight);
-      drawCutPath();
-    }
-
-    let siteSnapshot = null;
-
-    function showRealPage() {
-      const happyAudio = document.getElementById('happy-audio');
-      happyAudio.play().catch(() => {
-        setTimeout(() => happyAudio.play(), 500);
-      });
-
-      document.getElementById('spooky-screen').style.display = 'none';
-      document.getElementById('creepy-audio').pause();
-      document.getElementById('real-content').style.display = 'block';
-
-      // NOW take the snapshot (content is visible)
-      setTimeout(() => {
-        html2canvas(document.getElementById("real-content")).then(canvasSnapshot => {
-          siteSnapshot = canvasSnapshot;
-          drawCutPath();
-        });
-      }, 100); // small delay to ensure rendering
-
-      setInterval(launchConfetti, 1500);
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.querySelectorAll(".hover-tilt").forEach(img => {
-        img.addEventListener("mousemove", e => {
-          const rect = img.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = -(y - centerY) / 10;
-          const rotateY = (x - centerX) / 10;
-          img.style.transform = `scale(1.05) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        img.addEventListener("mouseleave", () => {
-          img.style.transform = "scale(1)";
-        });
-      });
-    });
-
-    // Party Hat Drag + Rotate
-    let isDragging = false;
-    let offsetX, offsetY;
-    let rotation = 0;
-    let scale = 1;
-    let scalingActive = false;
-
-    const wrapper = document.getElementById("party-hat-wrapper");
-    const rotateLeftBtn = document.getElementById("rotate-left");
-    const rotateRightBtn = document.getElementById("rotate-right");
-
-    wrapper.addEventListener("mousedown", e => {
-      if (e.target.tagName === "BUTTON") return;
-      isDragging = true;
-      scalingActive = true;
-      offsetX = e.clientX - wrapper.offsetLeft;
-      offsetY = e.clientY - wrapper.offsetTop;
-    });
-
-    document.addEventListener("mousemove", e => {
-      if (!isDragging) return;
-      wrapper.style.left = `${e.clientX - offsetX}px`;
-      wrapper.style.top = `${e.clientY - offsetY}px`;
-    });
-
-    document.addEventListener("mouseup", () => {
-      isDragging = false;
-      scalingActive = false;
-    });
-
-    rotateLeftBtn.addEventListener("click", () => {
-      rotation -= 15;
-      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    });
-
-    rotateRightBtn.addEventListener("click", () => {
-      rotation += 15;
-      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    });
-
-    wrapper.addEventListener("wheel", (e) => {
-      if (!scalingActive) return;
-      e.preventDefault();
-      const delta = -e.deltaY;
-      scale += delta * 0.0015;
-      scale = Math.min(Math.max(0.3, scale), 3);
-      wrapper.style.transform = `rotate(${rotation}deg) scale(${scale})`;
-    }, { passive: false });
-
-    // Coke Can Interactions
-    const cokeCan = document.getElementById("coke-can");
-    const cokePercentage = document.getElementById("coke-percentage");
-    const openSound = document.getElementById("coke-open");
-    const sipSound = document.getElementById("coke-sip");
-    let opened = false;
-    let sipsLeft = 10;
-
-    // Coke Can Dragging & Interaction
-    let cokeDragging = false;
-    let cokeOffsetX, cokeOffsetY;
-
-    cokeCan.addEventListener("mousedown", e => {
-      cokeDragging = true;
-      cokeOffsetX = e.clientX - cokeCan.offsetLeft;
-      cokeOffsetY = e.clientY - cokeCan.offsetTop;
-    });
-
-    document.addEventListener("mousemove", e => {
-      if (!cokeDragging) return;
-      const newLeft = e.clientX - cokeOffsetX;
-      const newTop = e.clientY - cokeOffsetY;
-      cokeCan.style.left = `${newLeft}px`;
-      cokeCan.style.top = `${newTop}px`;
-      cokePercentage.style.left = `${newLeft}px`;
-      cokePercentage.style.top = `${newTop - 90}px`;
-    });
-
-    document.addEventListener("mouseup", () => {
-      cokeDragging = false;
-    });
-
-
-    cokeCan.addEventListener("click", () => {
-      if (!opened) {
-        openSound.play();
-        opened = true;
-      } else {
-        if (sipsLeft > 0) {
-          sipSound.play();
-          sipsLeft--;
-          cokePercentage.textContent = `${sipsLeft * 20}%`;
-        }
-        if (sipsLeft === 0) {
-          cokeCan.remove();
-          cokePercentage.remove();
-
-          const vending = document.createElement("img");
-          vending.src = "images/vending-machine.png";
-          vending.alt = "Vending Machine";
-          vending.style.position = "absolute";
-          vending.style.right = "-300px";
-          vending.style.bottom = "20px";
-          vending.style.width = "200px";
-          vending.style.zIndex = "15";
-          vending.style.transition = "right 2s ease";
-          document.body.appendChild(vending);
-
-          setTimeout(() => {
-            vending.style.right = "20px";
-          }, 100);
-
-          setTimeout(() => {
-            const newCan = document.createElement("img");
-            newCan.src = "images/coke-can.png";
-            newCan.alt = "Coke Can";
-            newCan.style.position = "absolute";
-            newCan.style.left = "100px";
-            newCan.style.bottom = "20px";
-            newCan.style.width = "80px";
-            newCan.style.cursor = "grab";
-            newCan.style.zIndex = "10";
-            newCan.id = "coke-can";
-
-            const newLabel = document.createElement("div");
-            newLabel.id = "coke-percentage";
-            newLabel.textContent = "100%";
-            newLabel.style.position = "absolute";
-            newLabel.style.left = "100px";
-            newLabel.style.bottom = "110px";
-            newLabel.style.background = "white";
-            newLabel.style.borderRadius = "6px";
-            newLabel.style.padding = "2px 6px";
-            newLabel.style.fontWeight = "bold";
-            newLabel.style.color = "#333";
-
-            document.body.appendChild(newCan);
-            document.body.appendChild(newLabel);
-
-            opened = false;
-            sipsLeft = 10;
-            setupCokeInteractions(newCan, newLabel);
-
-            setTimeout(() => {
-              vending.style.right = "-300px";
-              setTimeout(() => vending.remove(), 2000);
-            }, 1500);
-          }, 2500);
-        }
-      }
-    });
-
-        // 🚜 Lawn Mower Drag & Cut
-    const mower = document.getElementById("lawnmower");
-    const mowerSound = document.getElementById("mower-sound");
-    const powerBtn = document.getElementById("power-toggle");
-    let mowerOn = false;
-    let mowerDragging = false;
-    let mowerOffsetX = 0, mowerOffsetY = 0;
-
-    powerBtn.addEventListener("click", () => {
-      mowerOn = !mowerOn;
-      powerBtn.textContent = mowerOn ? "Power: ON" : "Power: OFF";
-      if (mowerOn) mowerSound.play();
-      else mowerSound.pause();
-    });
-
-    mower.addEventListener("mousedown", e => {
-      mowerDragging = true;
-      mowerOffsetX = e.clientX - mower.offsetLeft;
-      mowerOffsetY = e.clientY - mower.offsetTop;
-    });
-
-    document.addEventListener("mousemove", e => {
-
-      if (!mowerDragging) return;
-      const x = e.clientX - mowerOffsetX;
-      const y = e.clientY - mowerOffsetY;
-      mower.style.left = `${x}px`;
-      mower.style.top = `${y}px`;
-      powerBtn.style.left = `${x}px`;
-      powerBtn.style.top = `${y - 30}px`;
-
-      if (mowerOn) {
-        trackMower(x + mower.offsetWidth / 2, y + mower.offsetHeight / 2);
-      }
-
-    });
-
-    document.addEventListener("mouseup", () => {
-      mowerDragging = false;
-    });
-
- const canvas = document.getElementById('cut-canvas');
-    const ctx = canvas.getContext('2d');
-    let cutPath = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drawCutPath();
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function drawCutPath() {
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = '#4CAF50'; // match grass color
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.globalCompositeOperation = 'destination-out';
-      for (const {x, y} of cutPath) {
-        ctx.beginPath();
-        ctx.arc(x, y, 100, 0, Math.PI * 2); // lawnmower of the gods
-
-        ctx.fill();
-      }
-
-      ctx.globalCompositeOperation = 'source-over';
-    }
-
-    function trackMower(x, y) {
-      cutPath.push({x, y});
-      drawCutPath();
-    }
-
-const bat = document.getElementById("baseball-bat");
-const bonkSound = document.getElementById("bonk-sound");
-let batDragging = false;
-let batOffsetX = 0, batOffsetY = 0;
-
-bat.addEventListener("mousedown", e => {
-  batDragging = true;
-  batOffsetX = e.clientX - bat.offsetLeft;
-  batOffsetY = e.clientY - bat.offsetTop;
-});
-
-document.addEventListener("mousemove", e => {
-  if (!batDragging) return;
-  const x = e.clientX - batOffsetX;
-  const y = e.clientY - batOffsetY;
-  bat.style.left = `${x}px`;
-  bat.style.top = `${y}px`;
-
-  document.querySelectorAll("img.hover-tilt, .gif-overlay").forEach(img => {
-    const batRect = bat.getBoundingClientRect();
-    const imgRect = img.getBoundingClientRect();
-
-    const overlap = !(
-      batRect.right < imgRect.left ||
-      batRect.left > imgRect.right ||
-      batRect.bottom < imgRect.top ||
-      batRect.top > imgRect.bottom
-    );
-
-    if (overlap && !img.classList.contains("bonked")) {
-      bonkSound.currentTime = 0;
-      bonkSound.play();
-      img.classList.add("bonked");
-      img.style.transform = "rotate(-5deg) scale(0.95)";
-      setTimeout(() => {
-        img.style.transform = "scale(1)";
-        img.classList.remove("bonked");
-      }, 300);
-    }
-  });
-});
-
-document.addEventListener("mouseup", () => {
-  batDragging = false;
-});
-    
-
-    function setupCokeInteractions(can, label) {
-  let dragging = false;
-  let offsetX = 0, offsetY = 0;
-
-  can.addEventListener("mousedown", e => {
-    dragging = true;
-    offsetX = e.clientX - can.offsetLeft;
-    offsetY = e.clientY - can.offsetTop;
-  });
-
-  document.addEventListener("mousemove", e => {
-    if (!dragging) return;
-    const newLeft = e.clientX - offsetX;
-    const newTop = e.clientY - offsetY;
-    can.style.left = `${newLeft}px`;
-    can.style.top = `${newTop}px`;
-    label.style.left = `${newLeft}px`;
-    label.style.top = `${newTop - 90}px`;
-  });
-
-  document.addEventListener("mouseup", () => {
-    dragging = false;
-  });
-
-  can.addEventListener("click", () => {
-    if (!opened) {
-      openSound.play();
-      opened = true;
-    } else {
-      if (sipsLeft > 0) {
-        sipSound.play();
-        sipsLeft--;
-        label.textContent = `${sipsLeft * 20}%`;
-      }
-      if (sipsLeft === 0) {
-        can.remove();
-        label.remove();
-
-        const vending = document.createElement("img");
-        vending.src = "images/vending-machine.png";
-        vending.alt = "Vending Machine";
-        vending.style.position = "absolute";
-        vending.style.right = "-300px";
-        vending.style.bottom = "20px";
-        vending.style.width = "200px";
-        vending.style.zIndex = "15";
-        vending.style.transition = "right 2s ease";
-        document.body.appendChild(vending);
-
-        setTimeout(() => {
-          vending.style.right = "20px";
-        }, 100);
-
-        setTimeout(() => {
-          const newCan = document.createElement("img");
-          newCan.src = "images/coke-can.png";
-          newCan.alt = "Coke Can";
-          newCan.style.position = "absolute";
-          newCan.style.left = "100px";
-          newCan.style.bottom = "20px";
-          newCan.style.width = "80px";
-          newCan.style.cursor = "grab";
-          newCan.style.zIndex = "10";
-          newCan.id = "coke-can";
-
-          const newLabel = document.createElement("div");
-          newLabel.id = "coke-percentage";
-          newLabel.textContent = "100%";
-          newLabel.style.position = "absolute";
-          newLabel.style.left = "100px";
-          newLabel.style.bottom = "110px";
-          newLabel.style.background = "white";
-          newLabel.style.borderRadius = "6px";
-          newLabel.style.padding = "2px 6px";
-          newLabel.style.fontWeight = "bold";
-          newLabel.style.color = "#333";
-
-          document.body.appendChild(newCan);
-          document.body.appendChild(newLabel);
-
-          opened = false;
-          sipsLeft = 10;
-          setupCokeInteractions(newCan, newLabel);
-
-          setTimeout(() => {
-            vending.style.right = "-300px";
-            setTimeout(() => vending.remove(), 2000);
-          }, 1500);
-        }, 2500);
-      }
-    }
-  });
-}
-  </script>
+  <div class="section">
+    <h2>Post-Release Tasks</h2>
+    <ul>
+      <li><input type="checkbox"> Update guides after control/feature changes</li>
+      <li><input type="checkbox"> Monitor forums (Steam, Discord, Reddit)</li>
+      <li><input type="checkbox"> Archive versioned docs in shared folder or GitHub</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Design Guidelines</h2>
+    <ul>
+      <li>Use headers, checkboxes, bolded actions for scan-ability</li>
+      <li>Keep sections short and bulleted</li>
+      <li>Optional: Add icons or visuals for clarity</li>
+      <li>Use lightweight, mobile-friendly formats (e.g. PDFs)</li>
+    </ul>
+  </div>
+
+  <p class="note">This format is optimized for responsive use across web and mobile, suitable for team dashboards like Notion, Trello, or Confluence.</p>
 </body>
 </html>
-
