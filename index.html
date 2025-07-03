@@ -5,31 +5,73 @@
   <title>Instruction Clarity Game</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
       text-align: center;
-      padding: 30px;
+      padding: 40px;
+      overflow-x: hidden;
     }
+
+    h2, #message {
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    h2 {
+      animation-delay: 0.2s;
+    }
+
     #game-box {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      max-width: 400px;
-      margin: 30px auto;
-      gap: 10px;
+      max-width: 500px;
+      margin: 40px auto;
+      gap: 15px;
     }
+
     .box {
-      width: 80px;
-      height: 80px;
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
+      background: radial-gradient(circle at top left, #ffffff, #ccc);
       cursor: pointer;
     }
-    #message {
-      margin-top: 20px;
-      font-weight: bold;
+
+    .box:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
     }
+
+    #message {
+      margin-top: 25px;
+      font-size: 1.2em;
+      font-weight: bold;
+      animation-delay: 0.5s;
+    }
+
     #next-btn {
       margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #4a90e2;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
       display: none;
+    }
+
+    #next-btn:hover {
+      background-color: #357ab8;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
@@ -52,8 +94,21 @@
     const message = document.getElementById('message');
     const nextBtn = document.getElementById('next-btn');
 
+    function setBoxHoverEffect(color) {
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
+        box.addEventListener('mouseenter', () => {
+          box.style.background = `radial-gradient(circle at top left, white, ${color})`;
+        });
+        box.addEventListener('mouseleave', () => {
+          box.style.background = `radial-gradient(circle at top left, #ffffff, #ccc)`;
+        });
+      });
+    }
+
     function startLevel1() {
       instructions.textContent = "Complete the task.";
+      fadeIn(instructions);
       message.textContent = "";
       nextBtn.style.display = "none";
       gameBox.innerHTML = "";
@@ -61,14 +116,16 @@
       colorsLevel1.forEach(color => {
         const box = document.createElement('div');
         box.className = 'box';
-        box.style.background = color;
+        box.style.background = `radial-gradient(circle at top left, white, ${color})`;
         box.onclick = () => checkChoice(color);
         gameBox.appendChild(box);
       });
+      setBoxHoverEffect('gray');
     }
 
     function startLevel2() {
       instructions.textContent = "Click the red square to continue.";
+      fadeIn(instructions);
       message.textContent = "";
       nextBtn.style.display = "none";
       gameBox.innerHTML = "";
@@ -76,18 +133,21 @@
       colorsLevel2.forEach(color => {
         const box = document.createElement('div');
         box.className = 'box';
-        box.style.background = color;
+        box.style.background = `radial-gradient(circle at top left, white, ${color})`;
         box.onclick = () => checkChoice(color);
         gameBox.appendChild(box);
       });
+      setBoxHoverEffect('gray');
     }
 
     function checkChoice(color) {
       if (color === correctColor) {
         message.textContent = "✔️ Success!";
+        fadeIn(message);
         nextBtn.style.display = "inline-block";
       } else {
         message.textContent = "❌ Not quite. Try again.";
+        fadeIn(message);
       }
     }
 
@@ -102,9 +162,18 @@
 
     function endGame() {
       instructions.textContent = "Now you see how much clear instructions matter.";
+      fadeIn(instructions);
       gameBox.innerHTML = "";
       message.textContent = "";
       nextBtn.style.display = "none";
+    }
+
+    function fadeIn(element) {
+      element.style.opacity = 0;
+      element.style.animation = 'none';
+      void element.offsetWidth; // Trigger reflow
+      element.style.animation = '';
+      element.style.animation = 'fadeIn 1s ease-in-out forwards';
     }
 
     // Start the game
