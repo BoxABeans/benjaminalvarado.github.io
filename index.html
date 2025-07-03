@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Instruction Clarity Game</title>
+  <meta charset="UTF-8" />
+  <title>The Clarity Trials</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -14,13 +14,33 @@
       overflow-x: hidden;
     }
 
-    h2, #message {
-      opacity: 0;
+    #title-screen, #game-ui, #end-screen {
+      display: none;
       animation: fadeIn 1s ease-in-out forwards;
     }
 
-    h2 {
-      animation-delay: 0.2s;
+    #title-screen.active, #game-ui.active, #end-screen.active {
+      display: block;
+    }
+
+    #title-screen h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    #start-btn {
+      padding: 12px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 10px;
+      background: #ff4d4d;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #start-btn:hover {
+      background: #cc0000;
     }
 
     #game-box {
@@ -28,7 +48,7 @@
       flex-wrap: wrap;
       justify-content: center;
       max-width: 500px;
-      margin: 40px auto;
+      margin: 30px auto;
       gap: 15px;
     }
 
@@ -46,15 +66,28 @@
       box-shadow: 0 12px 25px rgba(0,0,0,0.3);
     }
 
+    #narrator {
+      width: 120px;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    #dialogue {
+      margin-top: 10px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      font-style: italic;
+    }
+
     #message {
       margin-top: 25px;
       font-size: 1.2em;
       font-weight: bold;
-      animation-delay: 0.5s;
     }
 
     #next-btn {
-      margin-top: 30px;
+      margin-top: 25px;
       padding: 12px 25px;
       font-size: 1em;
       border: none;
@@ -78,22 +111,31 @@
 </head>
 <body>
 
-  <h2 id="instructions">Complete the task.</h2>
-  <div id="game-box"></div>
-  <div id="message"></div>
-  <button id="next-btn">Next Level</button>
+  <!-- Title Screen -->
+  <div id="title-screen" class="active">
+    <h1>The Clarity Trials</h1>
+    <p>Experience what it’s like to navigate unclear vs clear instructions!</p>
+    <button id="start-btn">Start Game</button>
+  </div>
+
+  <!-- Game UI -->
+  <div id="game-ui">
+    <h2 id="instructions">Complete the task.</h2>
+    <img id="narrator" src="assets/narrator.png" alt="Narrator" />
+    <div id="dialogue">Let's see how you handle this one...</div>
+    <div id="game-box"></div>
+    <div id="message"></div>
+    <button id="next-btn">Next Level</button>
+  </div>
+
+  <!-- End Screen -->
+  <div id="end-screen">
+    <h2>You did it!</h2>
+    <p>Now you’ve felt the difference clear instructions make.</p>
+  </div>
 
   <script>
     let level = 1;
-
-    const colorsLevel1 = ['blue', 'green', 'yellow', 'red', 'gray', 'purple', 'orange'];
-    const colorsLevel2 = ['red', 'gray', 'gray', 'gray'];
-    const correctColor = 'red';
-
-    const instructions = document.getElementById('instructions');
-    const gameBox = document.getElementById('game-box');
-    const message = document.getElementById('message');
-    const nextBtn = document.getElementById('next-btn');
 
     const colorMap = {
       red: "#ff4d4d",
@@ -104,6 +146,21 @@
       purple: "#b266ff",
       orange: "#ffa64d"
     };
+
+    const colorsLevel1 = ['blue', 'green', 'yellow', 'red', 'gray', 'purple', 'orange'];
+    const colorsLevel2 = ['red', 'gray', 'gray', 'gray'];
+    const correctColor = 'red';
+
+    const titleScreen = document.getElementById('title-screen');
+    const gameUI = document.getElementById('game-ui');
+    const endScreen = document.getElementById('end-screen');
+    const startBtn = document.getElementById('start-btn');
+
+    const instructions = document.getElementById('instructions');
+    const dialogue = document.getElementById('dialogue');
+    const gameBox = document.getElementById('game-box');
+    const message = document.getElementById('message');
+    const nextBtn = document.getElementById('next-btn');
 
     function shadeColor(hex, percent) {
       let num = parseInt(hex.replace("#", ""), 16);
@@ -116,9 +173,15 @@
       return `rgb(${r}, ${g}, ${b})`;
     }
 
-    function startLevel(colors, instructionsText) {
-      instructions.textContent = instructionsText;
-      fadeIn(instructions);
+    function fadeToGame() {
+      titleScreen.classList.remove("active");
+      gameUI.classList.add("active");
+      startLevel1();
+    }
+
+    function startLevel(colors, text, quote) {
+      instructions.textContent = text;
+      dialogue.textContent = quote;
       message.textContent = "";
       nextBtn.style.display = "none";
       gameBox.innerHTML = "";
@@ -132,7 +195,7 @@
         box.onclick = () => checkChoice(color);
 
         box.onmouseenter = () => {
-          document.body.style.backgroundColor = shadeColor(baseColor, -50);
+          document.body.style.backgroundColor = shadeColor(baseColor, -60);
         };
         box.onmouseleave = () => {
           document.body.style.backgroundColor = "#1a1a1a";
@@ -143,21 +206,19 @@
     }
 
     function startLevel1() {
-      startLevel(colorsLevel1, "Complete the task.");
+      startLevel(colorsLevel1, "Do the thing.", "I mean… you’ll figure it out. Probably.");
     }
 
     function startLevel2() {
-      startLevel(colorsLevel2, "Click the red square to continue.");
+      startLevel(colorsLevel2, "Click the red square to continue.", "Much better, right?");
     }
 
     function checkChoice(color) {
       if (color === correctColor) {
-        message.textContent = "✔️ Success!";
-        fadeIn(message);
+        message.textContent = "✔️ Nailed it!";
         nextBtn.style.display = "inline-block";
       } else {
-        message.textContent = "❌ Not quite. Try again.";
-        fadeIn(message);
+        message.textContent = "❌ Try again.";
       }
     }
 
@@ -166,28 +227,12 @@
         level = 2;
         startLevel2();
       } else {
-        endGame();
+        gameUI.classList.remove("active");
+        endScreen.classList.add("active");
       }
-    }
+    };
 
-    function endGame() {
-      instructions.textContent = "Now you see how much clear instructions matter.";
-      fadeIn(instructions);
-      gameBox.innerHTML = "";
-      message.textContent = "";
-      nextBtn.style.display = "none";
-    }
-
-    function fadeIn(element) {
-      element.style.opacity = 0;
-      element.style.animation = 'none';
-      void element.offsetWidth;
-      element.style.animation = '';
-      element.style.animation = 'fadeIn 1s ease-in-out forwards';
-    }
-
-    // Start the game
-    startLevel1();
+    startBtn.onclick = fadeToGame;
   </script>
 </body>
 </html>
