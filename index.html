@@ -6,9 +6,11 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      background-color: #1a1a1a;
+      color: #eee;
       text-align: center;
       padding: 40px;
+      transition: background-color 0.6s ease;
       overflow-x: hidden;
     }
 
@@ -34,15 +36,14 @@
       width: 90px;
       height: 90px;
       border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
       transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
-      background: radial-gradient(circle at top left, #ffffff, #ccc);
       cursor: pointer;
     }
 
     .box:hover {
       transform: scale(1.1);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
     }
 
     #message {
@@ -94,50 +95,59 @@
     const message = document.getElementById('message');
     const nextBtn = document.getElementById('next-btn');
 
-    function setBoxHoverEffect(color) {
-      const boxes = document.querySelectorAll('.box');
-      boxes.forEach(box => {
-        box.addEventListener('mouseenter', () => {
-          box.style.background = `radial-gradient(circle at top left, white, ${color})`;
-        });
-        box.addEventListener('mouseleave', () => {
-          box.style.background = `radial-gradient(circle at top left, #ffffff, #ccc)`;
-        });
+    const colorMap = {
+      red: "#ff4d4d",
+      blue: "#4da6ff",
+      green: "#66cc66",
+      yellow: "#ffdb4d",
+      gray: "#999999",
+      purple: "#b266ff",
+      orange: "#ffa64d"
+    };
+
+    function shadeColor(hex, percent) {
+      let num = parseInt(hex.replace("#", ""), 16);
+      let r = (num >> 16) + percent;
+      let g = ((num >> 8) & 0x00FF) + percent;
+      let b = (num & 0x0000FF) + percent;
+      r = Math.min(255, Math.max(0, r));
+      g = Math.min(255, Math.max(0, g));
+      b = Math.min(255, Math.max(0, b));
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    function startLevel(colors, instructionsText) {
+      instructions.textContent = instructionsText;
+      fadeIn(instructions);
+      message.textContent = "";
+      nextBtn.style.display = "none";
+      gameBox.innerHTML = "";
+
+      colors.forEach(color => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        const baseColor = colorMap[color] || color;
+        const gradient = `radial-gradient(circle at top left, ${shadeColor(baseColor, 60)}, ${baseColor})`;
+        box.style.background = gradient;
+        box.onclick = () => checkChoice(color);
+
+        box.onmouseenter = () => {
+          document.body.style.backgroundColor = shadeColor(baseColor, -50);
+        };
+        box.onmouseleave = () => {
+          document.body.style.backgroundColor = "#1a1a1a";
+        };
+
+        gameBox.appendChild(box);
       });
     }
 
     function startLevel1() {
-      instructions.textContent = "Complete the task.";
-      fadeIn(instructions);
-      message.textContent = "";
-      nextBtn.style.display = "none";
-      gameBox.innerHTML = "";
-
-      colorsLevel1.forEach(color => {
-        const box = document.createElement('div');
-        box.className = 'box';
-        box.style.background = `radial-gradient(circle at top left, white, ${color})`;
-        box.onclick = () => checkChoice(color);
-        gameBox.appendChild(box);
-      });
-      setBoxHoverEffect('gray');
+      startLevel(colorsLevel1, "Complete the task.");
     }
 
     function startLevel2() {
-      instructions.textContent = "Click the red square to continue.";
-      fadeIn(instructions);
-      message.textContent = "";
-      nextBtn.style.display = "none";
-      gameBox.innerHTML = "";
-
-      colorsLevel2.forEach(color => {
-        const box = document.createElement('div');
-        box.className = 'box';
-        box.style.background = `radial-gradient(circle at top left, white, ${color})`;
-        box.onclick = () => checkChoice(color);
-        gameBox.appendChild(box);
-      });
-      setBoxHoverEffect('gray');
+      startLevel(colorsLevel2, "Click the red square to continue.");
     }
 
     function checkChoice(color) {
@@ -171,7 +181,7 @@
     function fadeIn(element) {
       element.style.opacity = 0;
       element.style.animation = 'none';
-      void element.offsetWidth; // Trigger reflow
+      void element.offsetWidth;
       element.style.animation = '';
       element.style.animation = 'fadeIn 1s ease-in-out forwards';
     }
