@@ -1,162 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dev Checklist - Player Docs</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Open+Sans&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Instruction Clarity Game</title>
   <style>
     body {
-      font-family: 'Open Sans', sans-serif;
-      background: linear-gradient(135deg, #1e1e2f, #2b2c3e);
-      color: #f1f1f1;
-      line-height: 1.6;
-      padding: 2rem;
-      margin: 0;
+      font-family: sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+      padding: 30px;
     }
-    h1, h2 {
-      font-family: 'Orbitron', sans-serif;
-      color: #ffcc00;
-      text-shadow: 1px 1px #000;
-    }
-    .section {
-      margin-bottom: 2rem;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-      backdrop-filter: blur(4px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-    }
-    .section:hover {
-      transform: scale(1.02);
-      box-shadow: 0 12px 24px rgba(0, 255, 255, 0.15);
-      filter: brightness(1.15);
-    }
-    button:hover {
-      background-color: #00bbdd;
-      transform: scale(1.05);
-    }
-    ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    li {
-      margin-bottom: 0.75rem;
+    #game-box {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 400px;
+      margin: 30px auto;
+      gap: 10px;
     }
-    input[type="checkbox"] {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      margin-right: 0.7rem;
-      position: relative;
+    .box {
+      width: 80px;
+      height: 80px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
     }
-    input[type="checkbox"]:checked {
-      background-color: #00d1ff;
-      border-color: #00d1ff;
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
     }
-    input[type="checkbox"]:checked::after {
-      content: '✔';
-      position: absolute;
-      left: 3px;
-      top: -2px;
-      font-size: 16px;
-      color: #000;
-    }
-    .note {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-top: 1rem;
-      font-style: italic;
-    }
-    p {
-      margin: 0.3rem 0 0.6rem;
-    }
-    strong {
-      color: #87e8ff;
+    #next-btn {
+      margin-top: 30px;
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>🎮 Player-Facing Documentation Checklist</h1>
-  <p><strong>Prepared for:</strong> Game Development Team</p>
-  <p><strong>Author:</strong> Benjamin Alvarado</p>
-  <p><strong>Date:</strong> 6/20/25</p>
 
-  <form id="checklistForm" action="https://formspree.io/f/mvgrdred" method="POST">
-    <div class="section">
-      <h2>🎯 Purpose</h2>
-      <p>This checklist helps ensure that tutorials, guides, and bug reporting instructions are consistent and easy for players to understand. It promotes accessibility and reduces support requests.</p>
-    </div>
-
-    <div class="section">
-      <h2>🚧 Pre-Release Tasks</h2>
-      <label><input type="checkbox" name="checklist" value="Quick Start Guide"> Quick Start Guide in HTML, PDF, or in-game format</label><br>
-      <label><input type="checkbox" name="checklist" value="How to Report Bugs"> "How to Report Bugs" section added (README or menu)</label><br>
-      <label><input type="checkbox" name="checklist" value="Tutorial"> Tutorial includes mechanics, UI, objectives</label><br>
-      <label><input type="checkbox" name="checklist" value="WCAG"> UI text is 14pt+ and WCAG AA contrast compliant</label><br>
-      <label><input type="checkbox" name="checklist" value="Icons"> Consistent icons for key actions (jump, inventory, pause)</label>
-    </div>
-
-    <div class="section">
-      <h2>🚀 Release Tasks</h2>
-      <label><input type="checkbox" name="checklist" value="Linked Docs"> Documentation linked on game page (itch.io, Steam, etc.)</label><br>
-      <label><input type="checkbox" name="checklist" value="Bug Form Tested"> Bug report form user-tested</label><br>
-      <label><input type="checkbox" name="checklist" value="Docs Accessible"> Docs accessible via Main Menu and Pause Menu</label>
-    </div>
-
-    <div class="section">
-      <h2>🔧 Post-Release Tasks</h2>
-      <label><input type="checkbox" name="checklist" value="Guide Updates"> Update guides after control/feature changes</label><br>
-      <label><input type="checkbox" name="checklist" value="Forum Monitoring"> Monitor forums (Steam, Discord, Reddit)</label><br>
-      <label><input type="checkbox" name="checklist" value="Docs Archive"> Archive versioned docs in shared folder or GitHub</label>
-    </div>
-
-    <div class="section">
-      <h2>🎨 Design Guidelines</h2>
-      <label><input type="checkbox" name="checklist" value="Headers and Checkboxes"> Use headers, checkboxes, bolded actions for scan-ability</label><br>
-      <label><input type="checkbox" name="checklist" value="Short Sections"> Keep sections short and bulleted</label><br>
-      <label><input type="checkbox" name="checklist" value="Icons Optional"> Optional: Add icons or visuals for clarity</label><br>
-      <label><input type="checkbox" name="checklist" value="Mobile Friendly"> Use lightweight, mobile-friendly formats (e.g. PDFs)</label>
-    </div>
-
-    <p class="note">This web format is optimized for responsive use in dashboards. Designed for quick reference in dev pipelines.</p>
-
-    <input type="hidden" name="Checklist Summary" id="summaryField" />
-
-    <div style="text-align: center; margin-top: 2rem;">
-      <button type="submit" style="
-        padding: 1rem 2rem;
-        font-size: 1.1rem;
-        background-color: #00d1ff;
-        color: #000;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s ease, background-color 0.2s ease;">
-        ✅ Email My Checklist to Owner
-      </button>
-    </div>
-  </form>
+  <h2 id="instructions">Complete the task.</h2>
+  <div id="game-box"></div>
+  <div id="message"></div>
+  <button id="next-btn">Next Level</button>
 
   <script>
-    const form = document.getElementById('checklistForm');
-    const summaryField = document.getElementById('summaryField');
+    let level = 1;
 
-    form.addEventListener('submit', function (e) {
-      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-        .map(cb => '✅ ' + cb.value)
-        .join('\n');
+    const colorsLevel1 = ['blue', 'green', 'yellow', 'red', 'gray', 'purple', 'orange'];
+    const colorsLevel2 = ['red', 'gray', 'gray', 'gray'];
+    const correctColor = 'red';
 
-      summaryField.value = checked || "⚠️ No checklist items selected.";
-    });
+    const instructions = document.getElementById('instructions');
+    const gameBox = document.getElementById('game-box');
+    const message = document.getElementById('message');
+    const nextBtn = document.getElementById('next-btn');
+
+    function startLevel1() {
+      instructions.textContent = "Complete the task.";
+      message.textContent = "";
+      nextBtn.style.display = "none";
+      gameBox.innerHTML = "";
+
+      colorsLevel1.forEach(color => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.style.background = color;
+        box.onclick = () => checkChoice(color);
+        gameBox.appendChild(box);
+      });
+    }
+
+    function startLevel2() {
+      instructions.textContent = "Click the red square to continue.";
+      message.textContent = "";
+      nextBtn.style.display = "none";
+      gameBox.innerHTML = "";
+
+      colorsLevel2.forEach(color => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.style.background = color;
+        box.onclick = () => checkChoice(color);
+        gameBox.appendChild(box);
+      });
+    }
+
+    function checkChoice(color) {
+      if (color === correctColor) {
+        message.textContent = "✔️ Success!";
+        nextBtn.style.display = "inline-block";
+      } else {
+        message.textContent = "❌ Not quite. Try again.";
+      }
+    }
+
+    nextBtn.onclick = () => {
+      if (level === 1) {
+        level = 2;
+        startLevel2();
+      } else {
+        endGame();
+      }
+    }
+
+    function endGame() {
+      instructions.textContent = "Now you see how much clear instructions matter.";
+      gameBox.innerHTML = "";
+      message.textContent = "";
+      nextBtn.style.display = "none";
+    }
+
+    // Start the game
+    startLevel1();
   </script>
 </body>
 </html>
