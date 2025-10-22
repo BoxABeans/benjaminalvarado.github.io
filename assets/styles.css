@@ -1,0 +1,3 @@
+:root { color-scheme: light dark; }
+body { margin: 2rem; font: 16px/1.6 system-ui, sans-serif; }
+header { border-bottom: 1px solid #ccc; padding-bottom: .75rem; margin-bottom: 1.25rem; }
