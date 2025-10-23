@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b0d10" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <title>Benjamin Alvarado — Portfolio</title>
-  <meta name="description" content="Computer Science student & IT media systems technician. UTRGV IT Infrastructure & Operations, Unity dev, and systems projects." />
+  <meta name="description" content="Computer Science student & IT media systems technician. Unity & systems projects, Windows/Linux admin, and AV support." />
   <link rel="canonical" href="https://www.benjaminalvarado.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/styles.css" />
   <link rel="icon" href="assets/favicon.ico">
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:title" content="Benjamin Alvarado — Portfolio">
   <meta property="og:description" content="IT media systems support, Unity projects, and systems work.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.benjaminalvarado.com/">
   <meta property="og:image" content="assets/preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+
   <!-- JSON-LD -->
   <script type="application/ld+json">
   {
@@ -29,16 +33,149 @@
     "knowsAbout":["Windows administration","AV systems","Unity","C#","Python","Networking"]
   }
   </script>
+
+  <style>
+    /* ===== Design tokens ===== */
+    :root{
+      --bg:#0b0d10; --fg:#e9eef3; --muted:#a7b1bd;
+      --card:#11151b; --line:#1b222b; --accent:#4BA3FF; --chip:#1b2a3a;
+      --radius:16px; --radius-sm:12px; --shadow:0 6px 20px hsl(0 0% 0% / .24);
+    }
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#ffffff; --fg:#0e141b; --muted:#586274; --card:#f6f8fb; --line:#e8edf3; --accent:#1f73e8; --chip:#e9f2ff; }
+    }
+
+    /* ===== Reset + base ===== */
+    *,*::before,*::after{ box-sizing:border-box }
+    html,body{ margin:0; padding:0 }
+    body{
+      font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      background:var(--bg); color:var(--fg); line-height:1.5;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    img{ max-width:100%; display:block }
+    a{ color:var(--accent); text-decoration:none }
+    a:hover{ text-decoration:underline }
+    :focus-visible{ outline:2px solid var(--accent); outline-offset:3px }
+    .container{ max-width:1100px; margin:0 auto; padding:24px }
+
+    /* ===== Skip link ===== */
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+    .skip-link:focus{ left:24px; top:12px; width:auto; height:auto; background:var(--card); color:var(--fg); padding:8px 12px; border-radius:var(--radius-sm); border:1px solid var(--line) }
+
+    /* ===== Header / nav ===== */
+    .site-header{ position:sticky; top:0; backdrop-filter:saturate(180%) blur(10px); background:color-mix(in oklab, var(--bg) 85%, transparent); border-bottom:1px solid var(--line); z-index:10 }
+    .header-inner{ display:flex; align-items:center; gap:16px }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; color:var(--fg) }
+    .avatar{ width:28px; height:28px; border-radius:50%; background:url('assets/profile.jpg') center/cover no-repeat }
+    nav[aria-label="Primary"]{ margin-left:auto; display:flex; gap:18px }
+    nav[aria-label="Primary"] a{ color:var(--fg); opacity:.9 }
+    nav[aria-label="Primary"] a:hover, nav[aria-label="Primary"] a[aria-current="page"]{ opacity:1; text-decoration:underline }
+    .nav-toggle{ display:none; margin-left:auto; background:transparent; border:1px solid var(--line); color:var(--fg); padding:6px 10px; border-radius:8px }
+
+    /* ===== Hero ===== */
+    .hero{ padding:28px 0 8px; border-bottom:1px solid var(--line) }
+    .hero-inner{ display:grid; grid-template-columns:1.2fr .8fr; gap:24px; align-items:start }
+    h1{ font-size:40px; line-height:1.1; margin:10px 0 }
+    .accent{ color:var(--accent) }
+    .lead{ font-size:18px; color:var(--muted); margin:10px 0 18px }
+    .cta-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:10px }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; padding:10px 16px; border-radius:12px; border:1px solid var(--line); color:var(--fg); background:transparent }
+    .btn.primary{ background:var(--accent); color:white; border-color:transparent }
+    .btn.ghost{ background:transparent }
+    .btn.small{ padding:8px 12px; border-radius:10px; font-size:14px }
+    .btn[aria-disabled="true"]{ opacity:.6; pointer-events:none }
+    .meta{ display:flex; gap:16px; flex-wrap:wrap; color:var(--muted); font-size:14px }
+    .hero-card{ background:var(--card); border:1px solid var(--line); padding:16px; border-radius:var(--radius); box-shadow:var(--shadow) }
+    .hero-card h3{ margin:0 0 10px }
+
+    /* ===== Sections ===== */
+    main section{ scroll-margin-top:80px }
+    .section{ padding:40px 0 }
+    .section.alt{ background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line) }
+    .section h2{ font-size:26px; margin:0 0 14px }
+    .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:24px }
+
+    /* ===== Stats ===== */
+    .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px }
+    .stat{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; text-align:center }
+    .stat .num{ font-size:28px; font-weight:800; color:var(--accent) }
+    .stat .label{ color:var(--muted); font-size:13px }
+
+    /* ===== Timeline / cards ===== */
+    .timeline{ display:grid; grid-template-columns:1fr; gap:18px }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:var(--shadow) }
+    .card-head{ display:grid; gap:4px }
+    .card-head h3{ margin:0 }
+    .card-head .where{ color:var(--muted); font-size:14px }
+    .card-head .when{ color:var(--muted); font-size:13px }
+    .card ul{ margin:10px 0 0 18px; padding:0 }
+    .card ul li{ margin-bottom:6px }
+    .chips{ margin-top:14px; display:flex; gap:8px; flex-wrap:wrap }
+    .chip{ background:var(--chip); color:color-mix(in oklab, var(--fg), white 10%); padding:6px 10px; border-radius:999px; font-size:13px; border:1px solid var(--line) }
+
+    /* ===== Projects ===== */
+    .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px }
+    .project .tag{ display:inline-block; font-size:12px; color:var(--muted); margin-bottom:6px }
+
+    /* ===== Skills ===== */
+    .skills-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px }
+    .skills-grid h4{ margin:0 0 8px }
+
+    /* ===== Contact ===== */
+    .contact{ display:grid; grid-template-columns:1fr 1fr; gap:24px }
+    .contact-form{ display:grid; gap:10px }
+    .contact-form label{ display:grid; gap:6px; font-size:14px }
+    .contact-form input, .contact-form textarea{
+      background:var(--bg); color:var(--fg); border:1px solid var(--line);
+      border-radius:10px; padding:10px 12px; font:inherit;
+    }
+    .muted{ color:var(--muted); font-size:12px; margin:6px 0 0 }
+
+    /* ===== Footer ===== */
+    .site-footer{ border-top:1px solid var(--line) }
+    .foot-inner{ display:flex; align-items:center; justify-content:space-between }
+
+    /* ===== Motion safety ===== */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 920px){
+      .hero-inner{ grid-template-columns:1fr }
+      .grid-2{ grid-template-columns:1fr }
+      .stats{ grid-template-columns:repeat(3,1fr) }
+      .cards{ grid-template-columns:1fr 1fr }
+      .skills-grid{ grid-template-columns:1fr 1fr }
+      .contact{ grid-template-columns:1fr }
+    }
+    @media (max-width: 640px){
+      nav[aria-label="Primary"]{ display:none; position:absolute; right:24px; top:60px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; flex-direction:column }
+      nav[aria-label="Primary"].open{ display:flex }
+      .nav-toggle{ display:block }
+      .stats{ grid-template-columns:1fr 1fr }
+      .cards{ grid-template-columns:1fr }
+    }
+
+    /* ===== Print (CV friendly) ===== */
+    @media print{
+      .site-header, .cta-row, .chips, .contact-form, .site-footer { display:none !important }
+      a{ text-decoration:underline }
+      .card, .stat{ box-shadow:none }
+    }
+  </style>
 </head>
 <body>
-<header class="site-header">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header" role="banner">
   <div class="container header-inner">
     <a class="brand" href="#top">
       <div class="avatar" aria-hidden="true"></div>
       <span>Benjamin Alvarado</span>
     </a>
-    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-    <nav class="nav" id="nav">
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">☰</button>
+    <nav id="site-nav" aria-label="Primary">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
@@ -49,17 +186,17 @@
   </div>
 </header>
 
-<main id="top">
+<main id="main">
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="container hero-inner">
       <div>
         <h1>IT Media Systems & <span class="accent">Systems Support</span></h1>
         <p class="lead">
-          CS student at UTRGV with hands-on experience in classroom media systems, lab imaging, and
+          CS student at UTRGV with hands‑on experience in classroom media systems, lab imaging, and
           Windows troubleshooting. I also build interactive projects in Unity and Python.
         </p>
-        <div class="cta-row">
+        <div class="cta-row" role="group" aria-label="Primary actions">
           <a class="btn primary" href="#projects">See Projects</a>
           <a class="btn ghost" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
         </div>
@@ -68,23 +205,23 @@
           <span>🎓 UTRGV — Computer Science</span>
         </div>
       </div>
-      <div class="hero-card">
-        <h3>Quick Facts</h3>
+      <aside class="hero-card" aria-labelledby="quickfacts-title">
+        <h3 id="quickfacts-title">Quick Facts</h3>
         <ul>
           <li>UTRGV IT — Infrastructure & Operations</li>
           <li>AV: projectors, displays, room audio, Zoom/VC</li>
           <li>Windows/Linux, imaging & deployments</li>
           <li>Unity (C#), Python, C++</li>
         </ul>
-      </div>
+      </aside>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="section">
+  <section id="about" class="section" aria-labelledby="about-title">
     <div class="container grid-2">
       <div>
-        <h2>About</h2>
+        <h2 id="about-title">About</h2>
         <p>
           I support campus technology and media systems—keeping classrooms and labs reliable for
           students and faculty. I enjoy diagnosing tricky issues, documenting fixes, and making systems
@@ -92,16 +229,16 @@
           in Python/C#.
         </p>
       </div>
-      <div class="stats">
-        <div class="stat">
+      <div class="stats" aria-label="Impact stats">
+        <div class="stat" role="group" aria-label="Devices supported">
           <div class="num">200+</div>
           <div class="label">Lab/room devices supported</div>
         </div>
-        <div class="stat">
+        <div class="stat" role="group" aria-label="Docs created">
           <div class="num">15+</div>
           <div class="label">Recurring issues documented</div>
         </div>
-        <div class="stat">
+        <div class="stat" role="group" aria-label="Awards">
           <div class="num">3rd</div>
           <div class="label">Texas Tech URC Award</div>
         </div>
@@ -110,13 +247,13 @@
   </section>
 
   <!-- EXPERIENCE -->
-  <section id="experience" class="section">
+  <section id="experience" class="section" aria-labelledby="exp-title">
     <div class="container">
-      <h2>Experience</h2>
+      <h2 id="exp-title">Experience</h2>
       <div class="timeline">
-        <article class="card">
+        <article class="card" aria-labelledby="job-1-title">
           <header class="card-head">
-            <h3>IT – Infrastructure & Operations</h3>
+            <h3 id="job-1-title">IT – Infrastructure & Operations</h3>
             <span class="where">University of Texas Rio Grande Valley · Brownsville, TX</span>
             <span class="when">Jun 2024 – Present</span>
           </header>
@@ -128,9 +265,9 @@
           </ul>
         </article>
 
-        <article class="card">
+        <article class="card" aria-labelledby="job-2-title">
           <header class="card-head">
-            <h3>Tutor — Chemistry</h3>
+            <h3 id="job-2-title">Tutor — Chemistry</h3>
             <span class="where">Texas Southmost College · Brownsville, TX</span>
             <span class="when">Oct 2022 – Aug 2023</span>
           </header>
@@ -141,56 +278,56 @@
         </article>
       </div>
 
-      <div class="chips">
-        <span class="chip">AV Systems</span>
-        <span class="chip">Windows/Linux</span>
-        <span class="chip">Imaging & Deployment</span>
-        <span class="chip">Networking</span>
-        <span class="chip">Documentation</span>
-        <span class="chip">Customer Support</span>
+      <div class="chips" role="list" aria-label="Competency tags">
+        <span class="chip" role="listitem">AV Systems</span>
+        <span class="chip" role="listitem">Windows/Linux</span>
+        <span class="chip" role="listitem">Imaging & Deployment</span>
+        <span class="chip" role="listitem">Networking</span>
+        <span class="chip" role="listitem">Documentation</span>
+        <span class="chip" role="listitem">Customer Support</span>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
-  <section id="projects" class="section alt">
+  <section id="projects" class="section alt" aria-labelledby="projects-title">
     <div class="container">
-      <h2>Projects</h2>
+      <h2 id="projects-title">Projects</h2>
       <div class="cards">
-        <article class="card project">
+        <article class="card project" aria-labelledby="proj-1-title">
           <div class="tag">Unity · C#</div>
-          <h3>W.A.V — Horror-Action Prototype</h3>
+          <h3 id="proj-1-title">W.A.V — Horror‑Action Prototype</h3>
           <p>
             Lead developer & PM for a Unity project with FPS + metroidvania/roguelite elements.
             Implemented weapon/scan systems, retro visuals, and encounter logic. Coordinated a small
             team via GitHub; planning for Steam release.
           </p>
-          <div class="row">
+          <div class="cta-row">
             <a class="btn small" href="#" aria-disabled="true">Playable build (soon)</a>
             <a class="btn small ghost" href="#" aria-disabled="true">GitHub (private/soon)</a>
           </div>
         </article>
 
-        <article class="card project">
+        <article class="card project" aria-labelledby="proj-2-title">
           <div class="tag">Python · MediaPipe</div>
-          <h3>Hand Tracking Program</h3>
+          <h3 id="proj-2-title">Hand Tracking Program</h3>
           <p>
-            Real-time hand-joint tracking using MediaPipe + OpenCV via webcam; visualizes landmarks
+            Real‑time hand‑joint tracking using MediaPipe + OpenCV via webcam; visualizes landmarks
             and connections for gesture experiments.
           </p>
-          <div class="row">
+          <div class="cta-row">
             <a class="btn small ghost" href="#" aria-disabled="true">Code (soon)</a>
           </div>
         </article>
 
-        <article class="card project">
+        <article class="card project" aria-labelledby="proj-3-title">
           <div class="tag">Pi · RTMP/WebRTC</div>
-          <h3>Low-Latency Camera Stream</h3>
+          <h3 id="proj-3-title">Low‑Latency Camera Stream</h3>
           <p>
-            Self-hosted setup for near-real-time video streaming with controlled access; designed to
+            Self‑hosted setup for near‑real‑time video streaming with controlled access; designed to
             integrate with a Discord bot trigger for private viewing.
           </p>
-          <div class="row">
+          <div class="cta-row">
             <a class="btn small ghost" href="#" aria-disabled="true">Code (soon)</a>
           </div>
         </article>
@@ -199,9 +336,9 @@
   </section>
 
   <!-- SKILLS -->
-  <section id="skills" class="section">
+  <section id="skills" class="section" aria-labelledby="skills-title">
     <div class="container">
-      <h2>Skills</h2>
+      <h2 id="skills-title">Skills</h2>
       <div class="skills-grid">
         <div>
           <h4>Systems & Support</h4>
@@ -240,26 +377,26 @@
   </section>
 
   <!-- RESUME -->
-  <section id="resume" class="section alt">
+  <section id="resume" class="section alt" aria-labelledby="resume-title">
     <div class="container">
-      <h2>Résumé</h2>
+      <h2 id="resume-title">Résumé</h2>
       <p>Grab the latest PDF version here:</p>
       <a class="btn primary" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download PDF</a>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="section">
+  <section id="contact" class="section" aria-labelledby="contact-title">
     <div class="container contact">
       <div>
-        <h2>Contact</h2>
+        <h2 id="contact-title">Contact</h2>
         <p>Email: <a href="mailto:contact@benjaminalvarado.com">contact@benjaminalvarado.com</a></p>
         <p>Linktree: <a href="https://linktr.ee/BenjaminAlvarado" target="_blank" rel="noopener">linktr.ee/BenjaminAlvarado</a></p>
       </div>
       <form class="contact-form" action="https://formspree.io/f/your-id" method="POST">
         <label>
           Your email
-          <input type="email" name="_replyto" placeholder="you@example.com" required>
+          <input type="email" name="_replyto" placeholder="you@example.com" required autocomplete="email">
         </label>
         <label>
           Message
@@ -272,26 +409,41 @@
   </section>
 </main>
 
-<footer class="site-footer">
+<footer class="site-footer" role="contentinfo">
   <div class="container foot-inner">
     <small>© <span id="y"></span> Benjamin Alvarado</small>
-    <nav class="foot-nav">
+    <nav aria-label="Footer">
       <a href="#top">Back to top ↑</a>
     </nav>
   </div>
 </footer>
 
 <script>
-  // year
+  // live year
   document.getElementById('y').textContent = new Date().getFullYear();
 
   // mobile nav
   const toggle = document.querySelector('.nav-toggle');
-  const nav = document.getElementById('nav');
+  const nav = document.getElementById('site-nav');
   toggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
+  // close on ESC
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { nav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+  });
+  // mark current section in nav on scroll
+  const links = [...nav.querySelectorAll('a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + entry.target.id;
+      const link = nav.querySelector(`a[href="${id}"]`);
+      if (link) link.setAttribute('aria-current', entry.isIntersecting ? 'page' : 'false');
+    });
+  }, { rootMargin: '-40% 0px -59% 0px', threshold: 0.01 });
+  sections.forEach(sec => io.observe(sec));
 </script>
 </body>
 </html>
