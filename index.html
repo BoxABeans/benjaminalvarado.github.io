@@ -2,21 +2,296 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Benjamin Alvarado — Portfolio</title>
+  <meta name="description" content="Computer Science student & IT media systems technician. UTRGV IT Infrastructure & Operations, Unity dev, and systems projects." />
+  <link rel="canonical" href="https://www.benjaminalvarado.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/favicon.ico">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Benjamin Alvarado — Portfolio">
+  <meta property="og:description" content="IT media systems support, Unity projects, and systems work.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.benjaminalvarado.com/">
+  <meta property="og:image" content="assets/preview.png">
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Benjamin Alvarado",
+    "url":"https://www.benjaminalvarado.com/",
+    "email":"mailto:contact@benjaminalvarado.com",
+    "sameAs":["https://linktr.ee/BenjaminAlvarado"],
+    "jobTitle":"IT Media Systems Technician / CS Student",
+    "knowsAbout":["Windows administration","AV systems","Unity","C#","Python","Networking"]
+  }
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Benjamin Alvarado</h1>
-    <p>CS @ UTRGV · Unity & systems dev</p>
-  </header>
-  <main>
-    <h2>Projects</h2>
-    <ul>
-      <li>Unity horror demo — <a href="#">code</a></li>
-      <li>Pi RTMP/WebRTC stream — <a href="#">code</a></li>
-    </ul>
-  </main>
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top">
+      <div class="avatar" aria-hidden="true"></div>
+      <span>Benjamin Alvarado</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="nav" id="nav">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#resume">Résumé</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1>IT Media Systems & <span class="accent">Systems Support</span></h1>
+        <p class="lead">
+          CS student at UTRGV with hands-on experience in classroom media systems, lab imaging, and
+          Windows troubleshooting. I also build interactive projects in Unity and Python.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#projects">See Projects</a>
+          <a class="btn ghost" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
+        </div>
+        <div class="meta">
+          <span>📍 Brownsville / RGV</span>
+          <span>🎓 UTRGV — Computer Science</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Quick Facts</h3>
+        <ul>
+          <li>UTRGV IT — Infrastructure & Operations</li>
+          <li>AV: projectors, displays, room audio, Zoom/VC</li>
+          <li>Windows/Linux, imaging & deployments</li>
+          <li>Unity (C#), Python, C++</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container grid-2">
+      <div>
+        <h2>About</h2>
+        <p>
+          I support campus technology and media systems—keeping classrooms and labs reliable for
+          students and faculty. I enjoy diagnosing tricky issues, documenting fixes, and making systems
+          faster and easier to use. On the dev side, I build Unity gameplay systems and small tools
+          in Python/C#.
+        </p>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">200+</div>
+          <div class="label">Lab/room devices supported</div>
+        </div>
+        <div class="stat">
+          <div class="num">15+</div>
+          <div class="label">Recurring issues documented</div>
+        </div>
+        <div class="stat">
+          <div class="num">3rd</div>
+          <div class="label">Texas Tech URC Award</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="section">
+    <div class="container">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <article class="card">
+          <header class="card-head">
+            <h3>IT – Infrastructure & Operations</h3>
+            <span class="where">University of Texas Rio Grande Valley · Brownsville, TX</span>
+            <span class="when">Jun 2024 – Present</span>
+          </header>
+          <ul>
+            <li>Support classroom media systems (projectors, displays, audio) and computer labs.</li>
+            <li>Troubleshoot Windows OS, hardware, and networking issues for faculty/students.</li>
+            <li>Perform imaging, updates, and workstation configuration for operational readiness.</li>
+            <li>Document recurring issues to streamline future troubleshooting.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <header class="card-head">
+            <h3>Tutor — Chemistry</h3>
+            <span class="where">Texas Southmost College · Brownsville, TX</span>
+            <span class="when">Oct 2022 – Aug 2023</span>
+          </header>
+          <ul>
+            <li>Guided students one-on-one through coursework and labs; reinforced digital tools.</li>
+            <li>Built communication skills translating complex concepts into clear steps.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="chips">
+        <span class="chip">AV Systems</span>
+        <span class="chip">Windows/Linux</span>
+        <span class="chip">Imaging & Deployment</span>
+        <span class="chip">Networking</span>
+        <span class="chip">Documentation</span>
+        <span class="chip">Customer Support</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section alt">
+    <div class="container">
+      <h2>Projects</h2>
+      <div class="cards">
+        <article class="card project">
+          <div class="tag">Unity · C#</div>
+          <h3>W.A.V — Horror-Action Prototype</h3>
+          <p>
+            Lead developer & PM for a Unity project with FPS + metroidvania/roguelite elements.
+            Implemented weapon/scan systems, retro visuals, and encounter logic. Coordinated a small
+            team via GitHub; planning for Steam release.
+          </p>
+          <div class="row">
+            <a class="btn small" href="#" aria-disabled="true">Playable build (soon)</a>
+            <a class="btn small ghost" href="#" aria-disabled="true">GitHub (private/soon)</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="tag">Python · MediaPipe</div>
+          <h3>Hand Tracking Program</h3>
+          <p>
+            Real-time hand-joint tracking using MediaPipe + OpenCV via webcam; visualizes landmarks
+            and connections for gesture experiments.
+          </p>
+          <div class="row">
+            <a class="btn small ghost" href="#" aria-disabled="true">Code (soon)</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="tag">Pi · RTMP/WebRTC</div>
+          <h3>Low-Latency Camera Stream</h3>
+          <p>
+            Self-hosted setup for near-real-time video streaming with controlled access; designed to
+            integrate with a Discord bot trigger for private viewing.
+          </p>
+          <div class="row">
+            <a class="btn small ghost" href="#" aria-disabled="true">Code (soon)</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div>
+          <h4>Systems & Support</h4>
+          <ul>
+            <li>Windows / Linux administration</li>
+            <li>Imaging & deployments</li>
+            <li>AV setup & troubleshooting</li>
+            <li>Hardware diagnostics</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Software & Tools</h4>
+          <ul>
+            <li>Unity, GitHub, MediaPipe</li>
+            <li>Adobe Premiere & Photoshop</li>
+            <li>Microsoft Office Suite</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Programming</h4>
+          <ul>
+            <li>C++, C#, Python (intermediate)</li>
+            <li>Assembly x86 (beginner)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Other</h4>
+          <ul>
+            <li>Virtual Machines, Raspberry Pi</li>
+            <li>Discord API integration</li>
+            <li>English (fluent), Spanish (conversational)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section id="resume" class="section alt">
+    <div class="container">
+      <h2>Résumé</h2>
+      <p>Grab the latest PDF version here:</p>
+      <a class="btn primary" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download PDF</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container contact">
+      <div>
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:contact@benjaminalvarado.com">contact@benjaminalvarado.com</a></p>
+        <p>Linktree: <a href="https://linktr.ee/BenjaminAlvarado" target="_blank" rel="noopener">linktr.ee/BenjaminAlvarado</a></p>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/your-id" method="POST">
+        <label>
+          Your email
+          <input type="email" name="_replyto" placeholder="you@example.com" required>
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" placeholder="Hi Benjamin, let's talk about…" required></textarea>
+        </label>
+        <button class="btn primary" type="submit">Send</button>
+        <p class="muted">This form uses Formspree. Replace the action URL with your own endpoint if you prefer.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container foot-inner">
+    <small>© <span id="y"></span> Benjamin Alvarado</small>
+    <nav class="foot-nav">
+      <a href="#top">Back to top ↑</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // year
+  document.getElementById('y').textContent = new Date().getFullYear();
+
+  // mobile nav
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.getElementById('nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+</script>
 </body>
 </html>
