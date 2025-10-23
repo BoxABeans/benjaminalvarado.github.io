@@ -67,7 +67,7 @@
     .site-header{ position:sticky; top:0; backdrop-filter:saturate(180%) blur(10px); background:color-mix(in oklab, var(--bg) 85%, transparent); border-bottom:1px solid var(--line); z-index:10 }
     .header-inner{ display:flex; align-items:center; gap:16px }
     .brand{ display:flex; align-items:center; gap:10px; font-weight:800; color:var(--fg) }
-    .avatar{ width:28px; height:28px; border-radius:50%; background:url('assets/profile.jpg') center/cover no-repeat }
+    .avatar{ width:56px; height:56px; border-radius:50%; background:url('assets/profile.jpg') center/cover no-repeat; border:2px solid var(--line); box-shadow:var(--shadow) }
     nav[aria-label="Primary"]{ margin-left:auto; display:flex; gap:18px }
     nav[aria-label="Primary"] a{ color:var(--fg); opacity:.9 }
     nav[aria-label="Primary"] a:hover, nav[aria-label="Primary"] a[aria-current="page"]{ opacity:1; text-decoration:underline }
@@ -136,10 +136,32 @@
     .site-footer{ border-top:1px solid var(--line) }
     .foot-inner{ display:flex; align-items:center; justify-content:space-between }
 
-    /* ===== Motion safety ===== */
-    @media (prefers-reduced-motion: reduce){
-      *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important }
+  /* ===== Motion & interactions ===== */
+  html{ scroll-behavior:smooth }
+  .card, .btn, .chip, .avatar, .hero-card{
+    transition: transform .45s cubic-bezier(.2,.8,.2,1),
+                box-shadow .45s cubic-bezier(.2,.8,.2,1),
+                opacity .35s ease;
+  }
+  .btn:hover{ transform: translateY(-1px) }
+  .card:hover, .hero-card:hover{
+    transform: translateY(-3px);
+    box-shadow:0 10px 28px hsl(0 0% 0% / .32);
+  }
+  .chip:hover{ transform: translateY(-1px) }
+  /* reveal-on-scroll */
+  .will-reveal{ opacity:0; transform: translateY(14px) }
+  .reveal{ opacity:1; transform:none }
+
+  @media (prefers-reduced-motion: reduce){
+    *{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+      scroll-behavior:auto !important;
     }
+  }
+
 
     /* ===== Responsive ===== */
     @media (max-width: 920px){
@@ -180,7 +202,7 @@
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
-      <a href="#resume">Resume</a>
+      <a href="#resume">Résumé</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
@@ -392,6 +414,19 @@
         <h2 id="contact-title">Contact</h2>
         <p>Email: <a href="mailto:contact@benjaminalvarado.com">contact@benjaminalvarado.com</a></p>
         <p>Linktree: <a href="https://linktr.ee/BenjaminAlvarado" target="_blank" rel="noopener">linktr.ee/BenjaminAlvarado</a></p>
+      </div>
+      <form class="contact-form" action="https://formspree.io/f/your-id" method="POST">
+        <label>
+          Your email
+          <input type="email" name="_replyto" placeholder="you@example.com" required autocomplete="email">
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" placeholder="Hi Benjamin, let's talk about…" required></textarea>
+        </label>
+        <button class="btn primary" type="submit">Send</button>
+        <p class="muted">This form uses Formspree. Replace the action URL with your own endpoint if you prefer.</p>
+      </form>
     </div>
   </section>
 </main>
@@ -431,6 +466,27 @@
     });
   }, { rootMargin: '-40% 0px -59% 0px', threshold: 0.01 });
   sections.forEach(sec => io.observe(sec));
+
+  // reveal-on-scroll targets
+  const revealTargets = [
+    '.hero-inner > div',
+    '.hero-card',
+    '.stat',
+    '.card',
+    '.project',
+    '.skills-grid > div',
+    '.contact > *'
+  ].flatMap(sel => [...document.querySelectorAll(sel)]);
+  revealTargets.forEach(el => el.classList.add('will-reveal'));
+  const io2 = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('reveal');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+  revealTargets.forEach(el => io2.observe(el));
 </script>
 </body>
 </html>
