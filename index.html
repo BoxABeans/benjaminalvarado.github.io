@@ -186,6 +186,49 @@
 .photo-grid img{ width:100%; height:220px; object-fit:cover; display:block }
 .photo-grid figcaption{ padding:10px 12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line) }
 
+/* Sections + alt rows */
+.section{ padding:40px 0; }
+.section.alt{ background:var(--card); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+/* Cards (used in Volunteering) */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+
+/* Grouped photo galleries */
+.photo-group{ margin-top:12px }
+.photo-group h3{
+  margin:0 0 10px;
+  font-size:18px;
+  color:color-mix(in oklab, var(--fg), white 10%);
+}
+.photo-grid figure{
+  margin:0;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1);
+}
+.photo-grid figure:hover{ transform: translateY(-3px); box-shadow:0 10px 28px hsl(0 0% 0% / .32) }
+.photo-grid img{ width:100%; height:220px; object-fit:cover; display:block; border-radius:0 }
+.photo-grid figcaption{
+  padding:10px 12px;
+  font-size:13px;
+  color:var(--muted);
+  border-top:1px solid var(--line);
+}
+
+@media (max-width:640px){
+  .photo-grid img{ height:180px }
+}
+
+
 @media (max-width:640px){
   .photo-grid img{ height:180px }
 }
@@ -329,7 +372,7 @@
     </div>
   </section>
 
-  <!-- PHOTOS -->
+ <!-- PHOTOS -->
 <section id="photos" class="section alt" aria-labelledby="photos-title">
   <div class="container">
     <h2 id="photos-title">Photos</h2>
@@ -337,20 +380,20 @@
     <div class="photo-group" aria-labelledby="pg-eco">
       <h3 id="pg-eco">ECO-MOVE (TSC)</h3>
       <div class="photo-grid">
-        <figure class="will-reveal">
-          <img src="assets/photo1.jpg" alt="ECO-MOVE hot cocoa giveaway in winter" loading="lazy" data-full="assets/photo1.jpg">
+        <figure>
+          <img src="assets/photo1.jpg" alt="ECO-MOVE hot cocoa giveaway in winter" loading="lazy">
           <figcaption>Hot cocoa giveaway (winter)</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo2.jpg" alt="ECO-MOVE meeting" loading="lazy" data-full="assets/photo2.jpg">
+        <figure>
+          <img src="assets/photo2.jpg" alt="ECO-MOVE meeting" loading="lazy">
           <figcaption>Club meeting</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo3.jpg" alt="ECO-MOVE presentation" loading="lazy" data-full="assets/photo3.jpg">
+        <figure>
+          <img src="assets/photo3.jpg" alt="ECO-MOVE presentation" loading="lazy">
           <figcaption>Presentation</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo4.jpg" alt="ECO-MOVE meeting photo" loading="lazy" data-full="assets/photo4.jpg">
+        <figure>
+          <img src="assets/photo4.jpg" alt="ECO-MOVE meeting photo" loading="lazy">
           <figcaption>Meeting</figcaption>
         </figure>
       </div>
@@ -359,20 +402,20 @@
     <div class="photo-group" aria-labelledby="pg-bat">
       <h3 id="pg-bat">BAT-LSAMP</h3>
       <div class="photo-grid">
-        <figure class="will-reveal">
-          <img src="assets/photo5.jpg" alt="BAT-LSAMP—hotel lobby group photo" loading="lazy" data-full="assets/photo5.jpg">
+        <figure>
+          <img src="assets/photo5.jpg" alt="BAT-LSAMP—hotel lobby group photo" loading="lazy">
           <figcaption>Hotel lobby</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo6.jpg" alt="BAT-LSAMP event photo" loading="lazy" data-full="assets/photo6.jpg">
+        <figure>
+          <img src="assets/photo6.jpg" alt="BAT-LSAMP event photo" loading="lazy">
           <figcaption>Event</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo9.jpg" alt="BAT-LSAMP Certificate" loading="lazy" data-full="assets/photo9.jpg">
+        <figure>
+          <img src="assets/photo9.jpg" alt="BAT-LSAMP certificate" loading="lazy">
           <figcaption>Certificate</figcaption>
         </figure>
-        <figure class="will-reveal">
-          <img src="assets/photo11.jpg" alt="BAT-LSAMP—Certificate of Participation (UTRGV)" loading="lazy" data-full="assets/photo11.jpg">
+        <figure>
+          <img src="assets/photo11.jpg" alt="BAT-LSAMP—Certificate of Participation (UTRGV)" loading="lazy">
           <figcaption>Certificate of Participation (UTRGV)</figcaption>
         </figure>
       </div>
@@ -381,8 +424,8 @@
     <div class="photo-group" aria-labelledby="pg-tsc">
       <h3 id="pg-tsc">Tutoring (TSC)</h3>
       <div class="photo-grid">
-        <figure class="will-reveal">
-          <img src="assets/photo8.jpg" alt="Tutor Level 1 Certification (TSC)" loading="lazy" data-full="assets/photo8.jpg">
+        <figure>
+          <img src="assets/photo8.jpg" alt="Tutor Level 1 Certification (TSC)" loading="lazy">
           <figcaption>Tutor Level 1 Certification</figcaption>
         </figure>
       </div>
@@ -391,8 +434,8 @@
     <div class="photo-group" aria-labelledby="pg-utrgv">
       <h3 id="pg-utrgv">I.T (UTRGV)</h3>
       <div class="photo-grid">
-        <figure class="will-reveal">
-          <img src="assets/photo10.jpg" alt="UTRGV IT—Certificate of Appreciation" loading="lazy" data-full="assets/photo10.jpg">
+        <figure>
+          <img src="assets/photo10.jpg" alt="UTRGV IT—Certificate of Appreciation" loading="lazy">
           <figcaption>Certificate of Appreciation</figcaption>
         </figure>
       </div>
@@ -400,6 +443,7 @@
 
   </div>
 </section>
+
 
 
 <!-- Lightbox -->
