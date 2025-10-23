@@ -87,6 +87,50 @@ h1{ font-size:40px; line-height:1.1; margin:10px 0 }
 .site-footer{ border-top:1px solid var(--line); }
 .foot-inner{ display:flex; align-items:center; justify-content:space-between }
 
+/* Volunteering cards (reuse .card) */
+.vol-list { display:grid; grid-template-columns:1fr; gap:18px }
+
+/* Photos grid */
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));
+  gap:16px;
+}
+.photo-grid figure{
+  margin:0; background:var(--card); border:1px solid var(--line);
+  border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1);
+}
+.photo-grid figure:hover{ transform: translateY(-3px); box-shadow:0 10px 28px hsl(0 0% 0% / .32) }
+.photo-grid img{
+  width:100%; height:220px; object-fit:cover; display:block;
+}
+.photo-grid figcaption{
+  padding:10px 12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line);
+}
+
+/* Lightbox <dialog> */
+.photo-lightbox::backdrop{ background:rgba(0,0,0,.6) }
+.photo-lightbox{
+  border:none; padding:0; border-radius:var(--radius); overflow:hidden;
+  box-shadow:0 40px 80px rgba(0,0,0,.45); background:var(--card);
+  max-width:min(90vw, 1100px); width:fit-content;
+}
+.photo-lightbox img{ display:block; max-width:100%; height:auto }
+.photo-lightbox header{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 14px; border-bottom:1px solid var(--line);
+}
+.photo-lightbox header p{ margin:0; font-size:14px; color:var(--muted) }
+.photo-lightbox button{
+  background:transparent; border:1px solid var(--line); color:var(--fg);
+  padding:6px 10px; border-radius:10px; cursor:pointer;
+}
+@media (max-width:640px){
+  .photo-grid img{ height:180px }
+}
+
+
 /* Responsive */
 @media (max-width: 920px){
   .hero-inner{ grid-template-columns:1fr }

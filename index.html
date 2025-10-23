@@ -204,6 +204,8 @@
       <a href="#skills">Skills</a>
       <a href="#resume">Resume</a>
       <a href="#contact">Contact</a>
+      <a href="#volunteering">Volunteering</a>
+      <a href="#photos">Photos</a>
     </nav>
   </div>
 </header>
@@ -220,7 +222,7 @@
         </p>
         <div class="cta-row" role="group" aria-label="Primary actions">
           <a class="btn primary" href="#projects">See Projects</a>
-          <a class="btn ghost" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download Résumé</a>
+          <a class="btn ghost" href="assets/Benjamin_Alvarado_Resume.pdf" target="_blank" rel="noopener">Download Resume</a>
         </div>
         <div class="meta">
           <span>📍 Brownsville / RGV</span>
@@ -267,6 +269,71 @@
       </div>
     </div>
   </section>
+
+  <!-- VOLUNTEERING -->
+  <section id="volunteering" class="section" aria-labelledby="vol-title">
+    <div class="container">
+      <h2 id="vol-title">Volunteering</h2>
+      <div class="vol-list">
+        <article class="card will-reveal" aria-labelledby="vol-1">
+          <header class="card-head">
+            <h3 id="vol-1">Community Tech Support</h3>
+            <span class="where">Brownsville, TX</span>
+            <span class="when">2023 – Present</span>
+          </header>
+          <ul>
+            <li>Set up/refreshed donated PCs; basic cybersecurity and digital literacy coaching.</li>
+            <li>Troubleshot Windows issues for residents; documented simple how-to guides.</li>
+          </ul>
+        </article>
+
+        <article class="card will-reveal" aria-labelledby="vol-2">
+          <header class="card-head">
+            <h3 id="vol-2">UTRGV Event Support</h3>
+            <span class="where">UTRGV · Brownsville / Edinburg, TX</span>
+            <span class="when">2024 – Present</span>
+          </header>
+          <ul>
+            <li>Helped with projector/display alignment, room audio checks, and Zoom/VC setups.</li>
+            <li>Coordinated with staff; improved run-of-show reliability for campus events.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTOS -->
+<section id="photos" class="section alt" aria-labelledby="photos-title">
+  <div class="container">
+    <h2 id="photos-title">Photos</h2>
+    <div class="photo-grid">
+      <!-- Replace src and alt with your real images/captions -->
+      <figure class="will-reveal">
+        <img src="assets/photo1.jpg" alt="AV rack wiring after re-cable management" loading="lazy" data-full="assets/photo1.jpg">
+        <figcaption>AV rack—re-cable management</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo2.jpg" alt="Projector alignment and screen test" loading="lazy" data-full="assets/photo2.jpg">
+        <figcaption>Projector alignment</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo3.jpg" alt="Unity scene—prototype area lighting" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>Unity prototype lighting</figcaption>
+      </figure>
+      <!-- add more figures as needed -->
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<dialog class="photo-lightbox" id="lightbox" aria-label="Photo viewer">
+  <header>
+    <p id="lightbox-caption"></p>
+    <button type="button" id="lightbox-close" aria-label="Close">Close</button>
+  </header>
+  <img id="lightbox-img" alt="">
+</dialog>
+
 
   <!-- EXPERIENCE -->
   <section id="experience" class="section" aria-labelledby="exp-title">
