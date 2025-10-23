@@ -309,17 +309,46 @@
     <div class="photo-grid">
       <!-- Replace src and alt with your real images/captions -->
       <figure class="will-reveal">
-        <img src="assets/photo1.jpg" alt="AV rack wiring after re-cable management" loading="lazy" data-full="assets/photo1.jpg">
-        <figcaption>AV rack—re-cable management</figcaption>
+        <img src="assets/photo1.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo1.jpg">
+        <figcaption>ECO-MOVE (TSC)  -  Event where we gave out hot cocoa during winter</figcaption>
       </figure>
       <figure class="will-reveal">
-        <img src="assets/photo2.jpg" alt="Projector alignment and screen test" loading="lazy" data-full="assets/photo2.jpg">
-        <figcaption>Projector alignment</figcaption>
+        <img src="assets/photo2.jpg" alt="ECO-MOVE (TSC) " loading="lazy" data-full="assets/photo2.jpg">
+        <figcaption>ECO-MOVE (TSC)  -  Meeting</figcaption>
       </figure>
       <figure class="will-reveal">
-        <img src="assets/photo3.jpg" alt="Unity scene—prototype area lighting" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>Unity prototype lighting</figcaption>
+        <img src="assets/photo3.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>ECO-MOVE (TSC)  -  Presentation</figcaption>
       </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo4.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>ECO-MOVE (TSC)  -  Meeting</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo5.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>BAT-LSAMP (TSC) - Photo taken in the hotel lobby</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo6.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>BAT-LSAMP (TSC) - Photo taken at the event</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo9.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>BAT-LSAMP (TSC) - Certificate</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo8.jpg" alt="Tutor (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>Tutor (TSC) - Tutor level 1 Certification </figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo11.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>BAT-LSAMP (UTRGV) - Certificate of Participation</figcaption>
+      </figure>
+      <figure class="will-reveal">
+        <img src="assets/photo8.jpg" alt="I.T (UTRGV)" loading="lazy" data-full="assets/photo3.jpg">
+        <figcaption>I.T (UTRGV) - Certificate of Appreciation</figcaption>
+      </figure>
+      
       <!-- add more figures as needed -->
     </div>
   </div>
@@ -495,52 +524,150 @@
 </footer>
 
 <script>
-  // live year
-  document.getElementById('y').textContent = new Date().getFullYear();
+/* ========= UTILITIES ========= */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
 
-  // mobile nav
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.getElementById('site-nav');
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+/* ========= 1) Footer year ========= */
+const y = $('#y'); if (y) y.textContent = new Date().getFullYear();
+
+/* ========= 2) Scroll-reveal =========
+   Adds .will-reveal to targets, then swaps to .reveal when visible */
+const revealTargets = [
+  '.section h2',
+  '.section p',
+  '.section ul li',
+  '.card',
+  '.photo-grid img'
+].flatMap(sel => $$(sel));
+
+revealTargets.forEach(el => el.classList.add('will-reveal'));
+
+const revealIO = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('reveal');
+      obs.unobserve(entry.target);
+    }
   });
-  // close on ESC
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { nav.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
-  });
-  // mark current section in nav on scroll
-  const links = [...nav.querySelectorAll('a')];
-  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-  const io = new IntersectionObserver((entries) => {
+}, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+
+revealTargets.forEach(el => revealIO.observe(el));
+
+/* ========= 3) Active nav link on scroll =========
+   Highlights the current section link in the header <nav> */
+const nav = $('header nav');
+if (nav) {
+  const links = $$('a[href^="#"]', nav);
+  const secs = links
+    .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+    .filter(Boolean);
+
+  const navIO = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const id = '#' + entry.target.id;
       const link = nav.querySelector(`a[href="${id}"]`);
-      if (link) link.setAttribute('aria-current', entry.isIntersecting ? 'page' : 'false');
-    });
-  }, { rootMargin: '-40% 0px -59% 0px', threshold: 0.01 });
-  sections.forEach(sec => io.observe(sec));
-
-  // reveal-on-scroll targets
-  const revealTargets = [
-    '.hero-inner > div',
-    '.hero-card',
-    '.stat',
-    '.card',
-    '.project',
-    '.skills-grid > div',
-    '.contact > *'
-  ].flatMap(sel => [...document.querySelectorAll(sel)]);
-  revealTargets.forEach(el => el.classList.add('will-reveal'));
-  const io2 = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
+      if (!link) return;
       if (entry.isIntersecting) {
-        entry.target.classList.add('reveal');
-        obs.unobserve(entry.target);
+        links.forEach(l => l.removeAttribute('aria-current'));
+        link.setAttribute('aria-current', 'page');
       }
     });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
-  revealTargets.forEach(el => io2.observe(el));
+  }, { rootMargin: '-40% 0px -59% 0px', threshold: 0.01 });
+
+  secs.forEach(sec => navIO.observe(sec));
+}
+
+/* ========= 4) Photo lightbox (no external CSS needed) =========
+   Click any .photo-grid img to view larger, with caption. */
+(function setupLightbox(){
+  // Inject minimal styles for the lightbox
+  const css = `
+    .lb-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.65);
+      display:none; align-items:center; justify-content:center; z-index:9999}
+    .lb-open{display:flex}
+    .lb-frame{max-width:min(92vw,1100px); max-height:90vh; background:var(--card);
+      border-radius:var(--radius); border:1px solid var(--line);
+      box-shadow:0 40px 80px rgba(0,0,0,.45); overflow:hidden; display:flex; flex-direction:column}
+    .lb-head{display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:10px 14px; border-bottom:1px solid var(--line)}
+    .lb-cap{margin:0; font-size:14px; color:var(--muted)}
+    .lb-close{background:transparent; border:1px solid var(--line); color:var(--fg);
+      padding:6px 10px; border-radius:10px; cursor:pointer}
+    .lb-img{display:block; max-width:90vw; max-height:75vh; width:auto; height:auto; object-fit:contain}
+    @media (max-width:640px){ .lb-img{max-height:70vh} }
+  `;
+  const style = document.createElement('style');
+  style.textContent = css; document.head.appendChild(style);
+
+  // Build the lightbox elements once
+  const backdrop = document.createElement('div');
+  backdrop.className = 'lb-backdrop';
+  backdrop.innerHTML = `
+    <div class="lb-frame" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <div class="lb-head">
+        <p class="lb-cap"></p>
+        <button class="lb-close" type="button" aria-label="Close">Close</button>
+      </div>
+      <img class="lb-img" alt="">
+    </div>
+  `;
+  document.body.appendChild(backdrop);
+  const lbImg = $('.lb-img', backdrop);
+  const lbCap = $('.lb-cap', backdrop);
+  const lbClose = $('.lb-close', backdrop);
+
+  function open(src, alt, caption){
+    lbImg.src = src;
+    lbImg.alt = alt || '';
+    lbCap.textContent = caption || '';
+    backdrop.classList.add('lb-open');
+    // prevent background scroll
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function close(){
+    backdrop.classList.remove('lb-open');
+    lbImg.src = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  // Click any photo in the grid
+  document.addEventListener('click', (e) => {
+    const img = e.target.closest('.photo-grid img');
+    if (!img) return;
+    const full = img.getAttribute('data-full') || img.currentSrc || img.src;
+    const cap = img.getAttribute('data-caption') || img.alt || '';
+    open(full, img.alt, cap);
+  });
+
+  // Close handlers
+  lbClose.addEventListener('click', close);
+  backdrop.addEventListener('click', (e) => { if (e.target === backdrop) close(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && backdrop.classList.contains('lb-open')) close(); });
+
+  // Make gallery images lazy and decodable
+  $$('.photo-grid img').forEach(img => {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading','lazy');
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding','async');
+  });
+})();
+
+/* ========= 5) Nice-to-have: focus target after anchor click ========= */
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const id = a.getAttribute('href').slice(1);
+  const target = document.getElementById(id);
+  if (!target) return;
+  // after scrolling, move programmatic focus so keyboard users land in section
+  setTimeout(() => {
+    target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+    // clean up tabindex later
+    setTimeout(() => target.removeAttribute('tabindex'), 1000);
+  }, 300);
+});
 </script>
+
 </body>
 </html>
