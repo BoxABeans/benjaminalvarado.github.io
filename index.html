@@ -162,6 +162,33 @@
     }
   }
 
+/* Volunteering / Photos extras */
+.vol-list{ display:grid; grid-template-columns:1fr; gap:18px }
+
+.photo-group{ margin-top:12px }
+.photo-group h3{ margin:0 0 10px; font-size:18px; color:color-mix(in oklab, var(--fg), white 10%) }
+
+.photo-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(220px,1fr));
+  gap:16px;
+}
+.photo-grid figure{
+  margin:0;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s cubic-bezier(.2,.8,.2,1);
+}
+.photo-grid figure:hover{ transform: translateY(-3px); box-shadow:0 10px 28px hsl(0 0% 0% / .32) }
+.photo-grid img{ width:100%; height:220px; object-fit:cover; display:block }
+.photo-grid figcaption{ padding:10px 12px; font-size:13px; color:var(--muted); border-top:1px solid var(--line) }
+
+@media (max-width:640px){
+  .photo-grid img{ height:180px }
+}
 
     /* ===== Responsive ===== */
     @media (max-width: 920px){
@@ -306,53 +333,74 @@
 <section id="photos" class="section alt" aria-labelledby="photos-title">
   <div class="container">
     <h2 id="photos-title">Photos</h2>
-    <div class="photo-grid">
-      <!-- Replace src and alt with your real images/captions -->
-      <figure class="will-reveal">
-        <img src="assets/photo1.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo1.jpg">
-        <figcaption>ECO-MOVE (TSC)  -  Event where we gave out hot cocoa during winter</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo2.jpg" alt="ECO-MOVE (TSC) " loading="lazy" data-full="assets/photo2.jpg">
-        <figcaption>ECO-MOVE (TSC)  -  Meeting</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo3.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>ECO-MOVE (TSC)  -  Presentation</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo4.jpg" alt="ECO-MOVE (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>ECO-MOVE (TSC)  -  Meeting</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo5.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>BAT-LSAMP (TSC) - Photo taken in the hotel lobby</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo6.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>BAT-LSAMP (TSC) - Photo taken at the event</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo9.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>BAT-LSAMP (TSC) - Certificate</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo8.jpg" alt="Tutor (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>Tutor (TSC) - Tutor level 1 Certification </figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo11.jpg" alt="BAT-LSAMP (TSC)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>BAT-LSAMP (UTRGV) - Certificate of Participation</figcaption>
-      </figure>
-      <figure class="will-reveal">
-        <img src="assets/photo8.jpg" alt="I.T (UTRGV)" loading="lazy" data-full="assets/photo3.jpg">
-        <figcaption>I.T (UTRGV) - Certificate of Appreciation</figcaption>
-      </figure>
-      
-      <!-- add more figures as needed -->
+
+    <div class="photo-group" aria-labelledby="pg-eco">
+      <h3 id="pg-eco">ECO-MOVE (TSC)</h3>
+      <div class="photo-grid">
+        <figure class="will-reveal">
+          <img src="assets/photo1.jpg" alt="ECO-MOVE hot cocoa giveaway in winter" loading="lazy" data-full="assets/photo1.jpg">
+          <figcaption>Hot cocoa giveaway (winter)</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo2.jpg" alt="ECO-MOVE meeting" loading="lazy" data-full="assets/photo2.jpg">
+          <figcaption>Club meeting</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo3.jpg" alt="ECO-MOVE presentation" loading="lazy" data-full="assets/photo3.jpg">
+          <figcaption>Presentation</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo4.jpg" alt="ECO-MOVE meeting photo" loading="lazy" data-full="assets/photo4.jpg">
+          <figcaption>Meeting</figcaption>
+        </figure>
+      </div>
     </div>
+
+    <div class="photo-group" aria-labelledby="pg-bat">
+      <h3 id="pg-bat">BAT-LSAMP</h3>
+      <div class="photo-grid">
+        <figure class="will-reveal">
+          <img src="assets/photo5.jpg" alt="BAT-LSAMP—hotel lobby group photo" loading="lazy" data-full="assets/photo5.jpg">
+          <figcaption>Hotel lobby</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo6.jpg" alt="BAT-LSAMP event photo" loading="lazy" data-full="assets/photo6.jpg">
+          <figcaption>Event</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo9.jpg" alt="BAT-LSAMP Certificate" loading="lazy" data-full="assets/photo9.jpg">
+          <figcaption>Certificate</figcaption>
+        </figure>
+        <figure class="will-reveal">
+          <img src="assets/photo11.jpg" alt="BAT-LSAMP—Certificate of Participation (UTRGV)" loading="lazy" data-full="assets/photo11.jpg">
+          <figcaption>Certificate of Participation (UTRGV)</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="photo-group" aria-labelledby="pg-tsc">
+      <h3 id="pg-tsc">Tutoring (TSC)</h3>
+      <div class="photo-grid">
+        <figure class="will-reveal">
+          <img src="assets/photo8.jpg" alt="Tutor Level 1 Certification (TSC)" loading="lazy" data-full="assets/photo8.jpg">
+          <figcaption>Tutor Level 1 Certification</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="photo-group" aria-labelledby="pg-utrgv">
+      <h3 id="pg-utrgv">I.T (UTRGV)</h3>
+      <div class="photo-grid">
+        <figure class="will-reveal">
+          <img src="assets/photo10.jpg" alt="UTRGV IT—Certificate of Appreciation" loading="lazy" data-full="assets/photo10.jpg">
+          <figcaption>Certificate of Appreciation</figcaption>
+        </figure>
+      </div>
+    </div>
+
   </div>
 </section>
+
 
 <!-- Lightbox -->
 <dialog class="photo-lightbox" id="lightbox" aria-label="Photo viewer">
@@ -510,6 +558,7 @@
         <h2 id="contact-title">Contact</h2>
         <p>Email: <a href="mailto:contact@benjaminalvarado.com">contact@benjaminalvarado.com</a></p>
         <p>Linktree: <a href="https://linktr.ee/BenjaminAlvarado" target="_blank" rel="noopener">linktr.ee/BenjaminAlvarado</a></p>
+      </div>
     </div>
   </section>
 </main>
